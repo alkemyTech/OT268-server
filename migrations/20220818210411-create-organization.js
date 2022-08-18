@@ -12,12 +12,15 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
         validate: {
-          is: /^[A-Za-z]+$/,
+          is: /^[A-Za-z]+$/g,
         },
       },
       image: {
         allowNull: false,
         type: Sequelize.STRING,
+        validate: {
+          is: /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g,
+        },
       },
       address: {
         type: Sequelize.STRING,
@@ -26,6 +29,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         validate: {
           isInt: true,
+          len: [10],
         },
       },
       email: {
