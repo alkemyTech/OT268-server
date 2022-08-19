@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 const bcrypt = require("bcrypt");
 const db = require('../models')
-const sendEmail = require('../middlewares/email')
 const {User} = db
+
 
 /* GET users listing. */
 router.get('/',  async (req, res, next) => {
@@ -18,7 +18,7 @@ router.get('/',  async (req, res, next) => {
 //////////////////////////////////////////////////////////
 
 
-router.post('/post', async (req, res) => {
+router.post('/register', async (req, res) => {
   try {
     const { firstName, lastName, password, image, email, roleId } = req.body;
     console.log(firstName, lastName, password, image, email)
