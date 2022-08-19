@@ -1,5 +1,4 @@
 const { User } = require('../models');
-const bcrypt = require('bcryptjs');
 
 const logIn = async (req, res) => {
   console.log('Post log');
@@ -16,7 +15,6 @@ const logIn = async (req, res) => {
       return res.status(404).json({ ok: false });
     }
 
-    // const isPasswordValid = bcrypt.compareSync(password, user.password);
     const isPasswordValid = password === user.password;
 
     if (!isPasswordValid) {
