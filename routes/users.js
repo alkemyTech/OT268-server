@@ -47,7 +47,7 @@ router.post('/register', async (req, res) => {
     });
     
 
-    sendEmail(email, firstName);
+    // sendEmail(email, firstName);
     return res.status(200).json({ msg: "User created sucefully", data: user });
   } catch (error) {
     res.status(404).send("Ups something went wrong, try again");
