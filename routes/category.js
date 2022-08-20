@@ -8,19 +8,22 @@ const CategoryController = require('../controllers/category.controller')
 router.get('/', CategoryController.get);
 
 // CREATE
-AreaRouter.post("/", function(req, res, next){
+router.post("/", function(req, res, next){
     const keys = ["name", "image", "description"];
     checkSchema(req,res,next,keys);
-  }, AreaController.create);
+  }, CategoryController.create);
   
   // Get By Id
-  AreaRouter.get("/:id", AreaController.getById);
+  router.get("/:id", CategoryController.getById);
   
   //UPDATE
-  AreaRouter.put("/:id",  AreaController.update);
+  router.put("/:id", function(req, res, next){
+    const keys = ["name", "image", "description"];
+    checkSchema(req,res,next,keys);
+  }, CategoryController.update);
   
   //DELETE
-  AreaRouter.delete("/:id", AreaController.deleteById);
+  router.delete("/:id", CategoryController.deleteById);
   
 
 module.exports = router;
