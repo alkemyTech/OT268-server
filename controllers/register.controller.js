@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const db = require('../models')
 const {User} = db
+const sendEmail = require('../services/emailSender')
 
 const register = async (req, res) => {
     try {
@@ -30,8 +31,9 @@ const register = async (req, res) => {
         roleId
       });
       
-  
-      // sendEmail(email, firstName);
+      const messageWelcome = `Welcome ${firstNameUpperCase} to ONG somos mas`
+      
+      sendEmail(email, messageWelcome, messageWelcome );
       return res.status(200).json({ msg: "User created sucefully", data: user });
     } catch (error) {
       res.status(404).send("Ups something went wrong, try again");
