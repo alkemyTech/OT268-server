@@ -50,12 +50,21 @@ async function updateMember(req, res){
     return res.status(200).send(updated)
 }
 
+async function createMember(req, res){
+
+    const {newValues} = req.body
+    const created = await Member.create({...newValues}).catch(err => console.log(err))
+    if(!created) return res.status(400).json({ok: false})
+    return res.status(200).send(created)
+}
+
 module.exports = {
 
     getAllMembers,
     getMemberById,
     deleteMember,
     restoreMember,
-    updateMember
+    updateMember,
+    createMember
 
 }
