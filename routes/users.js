@@ -1,12 +1,16 @@
 var express = require('express');
+const { deleteUserByIdController } = require('../controllers/user');
+
 var router = express.Router();
-const db = require('../models')
+
 
 /* GET users listing. */
 
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
+
+router.delete('/:id', deleteUserByIdController)
 
 
 
