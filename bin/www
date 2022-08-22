@@ -27,7 +27,7 @@
   */
  
  server.listen(port , async () => {
-   const force = process.env.FORCE_SYNC_DB === 'true' ? true : false
+   const force = process.env.FORCE_SYNC_DB === 'true';
    await models.sequelize.sync({force}).then(() => console.log('db synced'))
  })
  server.on('error', onError);
