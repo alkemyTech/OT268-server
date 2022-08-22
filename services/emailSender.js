@@ -3,10 +3,10 @@ const sgEmail = require('@sendgrid/mail');
 
 sgEmail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const sendEmail = (to, from, subject, message) => {
+const sendEmail = (to, subject, message) => {
   const msg = {
     to,
-    from,
+    from : process.env.EMAIL_ORIGIN,
     subject,
     html: message,
   };
