@@ -2,9 +2,8 @@
 const db = require('../models/index');
 
 const Category = require('../models/category')(db.sequelize, db.Sequelize.DataTypes);
-const Prueba = "Category";
 
-exports.get =  async (req,res) =>{
+const get =  async (req,res) =>{
     Category.findAll().then(response =>   
          res.status(200).send(response)
          ).catch(err => {
@@ -12,8 +11,7 @@ exports.get =  async (req,res) =>{
         });
 }
 
-exports.create = (req, res) => {
-    console.log("llego Create ", Prueba);
+const create = (req, res) => {
     const category = {};
     category.name = req.body.name;
     category.description = req.body.description;
@@ -24,26 +22,20 @@ exports.create = (req, res) => {
     }).catch(err => {
         res.status(500).send(err);
     });
-    // res.json({ok: true,
-    //     mensaje: `Estamos en Create ${Prueba}`})
 
 }
 
-exports.getById =  (req,res) =>{
+const getById =  (req,res) =>{
 
-    console.log("llego GetById ", Prueba);
     Category.findByPk(req.params.id).then(response => {
         res.status(200).send(response);
     }).catch(err =>{
         res.status(500).send(err);
     })
 
-    // res.json({ok: true,
-    //     mensaje: `Estamos en GetById ${Prueba}`})
 }
 
-exports.update =  (req,res) =>{
-    console.log("llego Update ", Prueba);
+const update =  (req,res) =>{
 
     let upData = {};
     req.body.name !== "" ? (upData.name = req.body.name) : "";
@@ -55,18 +47,25 @@ exports.update =  (req,res) =>{
     }).catch(err => {
         res.status(500).send(err);
     })
-    // res.json({ok: true,
-    //     mensaje: `Estamos en Update ${Prueba}`})
+
 }
 
-exports.deleteById =  (req,res) =>{
+const deleteById =  (req,res) =>{
 
-    console.log("llego DeleteById ", Prueba)
     Category.destroy({where: {id: req.params.id}}).then(response => {
         res.sendStatus(200).send(response);
     }).catch(err =>{
         res.status(500).send(err);
     })
-    // res.json({ok: true,
-    //        mensaje: `Estamos en DeleteById ${Prueba}`})
+ 
 }
+
+
+module.exports = {
+    get,
+    create,
+    getById,
+    update,
+    deleteById,
+  };
+  
