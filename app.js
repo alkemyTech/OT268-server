@@ -11,6 +11,9 @@ const usersRouter = require('./routes/users');
 const organizationsRouter = require('./routes/organizations');
 const authRouter = require('./routes/auth');
 
+const authRouter = require('./routes/auth');
+
+
 const app = express();
 app.use(cors());
 
@@ -27,6 +30,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/organizations', organizationsRouter);
+app.use('/auth', authRouter);
+
+
 app.use('/auth', authRouter);
 
 
