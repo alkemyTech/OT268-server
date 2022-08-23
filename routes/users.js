@@ -1,7 +1,7 @@
-var express = require('express');
+const express = require('express');
 const { deleteUserByIdController } = require('../controllers/user');
 
-var router = express.Router();
+const router = express.Router();
 
 
 /* GET users listing. */
