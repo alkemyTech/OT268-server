@@ -13,7 +13,6 @@ const authRouter = require('./routes/auth');
 
 const authRouter = require('./routes/auth');
 
-
 const app = express();
 app.use(cors());
 
@@ -32,10 +31,6 @@ app.use('/users', usersRouter);
 app.use('/organizations', organizationsRouter);
 app.use('/auth', authRouter);
 
-
-app.use('/auth', authRouter);
-
-
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
@@ -49,8 +44,8 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res
-  .status(err.status || 500)
-  .json({ message:res.locals.message, statusCode: err.status});
+    .status(err.status || 500)
+    .json({ message: res.locals.message, statusCode: err.status });
 });
 
 module.exports = app;
