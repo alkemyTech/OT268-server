@@ -11,8 +11,6 @@ const usersRouter = require('./routes/users');
 const organizationsRouter = require('./routes/organizations');
 const authRouter = require('./routes/auth');
 
-const authRouter = require('./routes/auth');
-
 const app = express();
 app.use(cors());
 
