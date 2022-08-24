@@ -11,6 +11,7 @@ const usersRouter = require('./routes/users');
 const organizationsRouter = require('./routes/organizations');
 
 const authRouter = require('./routes/auth');
+const categoryRouter = require('./routes/category');
 
 
 const app = express();
@@ -28,6 +29,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.use('/category', categoryRouter);
+
 app.use('/organizations', organizationsRouter);
 
 app.use('/auth', authRouter);
