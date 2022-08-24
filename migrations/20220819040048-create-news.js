@@ -38,4 +38,4 @@ module.exports = {
     await queryInterface.dropTable('News');
   }
 };
-//crear asociacion 
+//crear asociacion con category ID

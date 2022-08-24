@@ -2,6 +2,7 @@ const models = require('../models');
 const { News } = models
 
 // GET ALL NEWS
+
 const getAllNews = async (req, res) => {
 
     let news = {};
@@ -18,6 +19,7 @@ const getAllNews = async (req, res) => {
 }
 
 // CREATE NEWS
+
 const createNews = async (req, res, next) => {
 
     let news = {};
