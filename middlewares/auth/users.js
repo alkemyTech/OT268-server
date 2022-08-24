@@ -1,25 +1,25 @@
 const jwt = require('jsonwebtoken')
 // importo configuracion token (pablo covijo)
 
-/**
- * Middleware de Ownership
- * protege endpints p/ usuario actual
- */
+/******************************************
+    Middleware de Ownership
+    protege endpints p/ usuario actual
+ ******************************************/
 
 async function AuthUser(req, res, next) {
 
     try {
         // Mensaje de error param id != token user id
         if (!req.headers.authorization) {
-            res.status(403).json({ message: "Acceso no autorizado" });
+            res.status(403).json({ message: "Authentication failed! Ivalid token" });
             return;
         }
-        //comprueba la validez del token
+        //comprueba la validez del token con el ID del user
         const token = req.headers.authorization.split(" ").pop();
-        const tokenData = await verifyToken(token);
+        const tokenUser = await verifyToken(token);
 
-        if (!tokenData.id) {
-            res.status(403).json({ message: "Acceso no autorizado" });
+        if (!tokenUser.id) {
+            res.status(403).json({ message: "Authentication failed! Invalid Token - User not found" });
         }
         else {
             next();
@@ -28,7 +28,7 @@ async function AuthUser(req, res, next) {
     }
     catch (error) {
         res.status(403).json({
-            message: 'Something went wrong'
+            message: 'Authentication failed! Token required'
         });
         console.log(error)
     }
