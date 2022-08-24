@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 /******************************************
     Middleware de Ownership
     protege endpints p/ usuario actual
+    
  ******************************************/
 
 async function AuthUser(req, res, next) {
