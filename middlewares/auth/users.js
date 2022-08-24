@@ -2,8 +2,11 @@ const jwt = require('jsonwebtoken')
 // importo configuracion token (pablo covijo)
 
 /******************************************
+
     Middleware User Admin 
+    
 ******************************************/
+
 const AuthUser = async (req, res, next) => {
 
     try {
