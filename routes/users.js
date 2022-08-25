@@ -1,25 +1,18 @@
-
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 
 const { register } = require("../controllers/register.controller");
 
-
-const { deleteUserByIdController } = require('../controllers/user');
-
-
-
+const { deleteUserByIdController } = require("../controllers/user");
 
 /* GET users listing. */
 
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get("/", function (req, res, next) {
+  res.send("respond with a resource");
 });
 
-router.delete('/:id', deleteUserByIdController)
+router.delete("/:id", deleteUserByIdController);
 
-
-
-router.route("/auth/register").post(register);
+router.post("/auth/register", register);
 
 module.exports = router;
