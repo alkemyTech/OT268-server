@@ -3,10 +3,10 @@ const models = require('../models');
 const { Role } = models;
 
 
-/******************************************
+/*****************************************
     Middleware de Ownership
     protege endpints p/ usuario actual
- ******************************************/
+ *****************************************/
 
 const adminAuthentication = async  (req, res, next) => {
     //Verifico si recibo token con el usuario
