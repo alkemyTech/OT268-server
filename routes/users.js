@@ -1,7 +1,13 @@
-const express = require('express');
+
+var express = require("express");
+var router = express.Router();
+
+const { register } = require("../controllers/register.controller");
+
+
 const { deleteUserByIdController } = require('../controllers/user');
 
-const router = express.Router();
+
 
 
 /* GET users listing. */
@@ -13,5 +19,7 @@ router.get('/', function(req, res, next) {
 router.delete('/:id', deleteUserByIdController)
 
 
+
+router.route("/auth/register").post(register);
 
 module.exports = router;

@@ -8,9 +8,12 @@ require('dotenv').config();
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+
 const organizationsRouter = require('./routes/organizations');
+
 const authRouter = require('./routes/auth');
 const categoryRouter = require('./routes/category');
+
 
 const app = express();
 app.use(cors());
@@ -49,5 +52,6 @@ app.use(function (err, req, res, next) {
     .status(err.status || 500)
     .json({ message: res.locals.message, statusCode: err.status });
 });
+
 
 module.exports = app;
