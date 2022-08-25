@@ -18,6 +18,7 @@ const getAllNews = async (req, res) => {
     };
 }
 
+
 // CREATE NEWS
 
 const createNews = async (req, res, next) => {
@@ -46,7 +47,7 @@ const createNews = async (req, res, next) => {
     };
 };
 
-// UPDATE NEWS
+// UP DATE NEWS
 const updateNews = async (req, res) => {
 
     let news = {};

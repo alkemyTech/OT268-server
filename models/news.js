@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // crear asociación con el nombre categoryId, esperar modelo catedory creado por Esteban
+      // crear asociación con el nombre categoryId, esperar modelo catedory creado x Esteban
     }
   };
   News.init({
