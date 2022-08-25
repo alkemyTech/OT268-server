@@ -15,6 +15,7 @@ const adminAuthentication = async  (req, res, next) => {
 
     try {
         //verifico el roleId
+        
         const { roleId } = jwt.verify(token, process.env.JWT_SECRET);
 
         const user = await Role.findOne({ where: { id: roleId } });
