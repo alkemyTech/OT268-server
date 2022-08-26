@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Member.init({
-    id: DataTypes.INTEGER,
+    //id: DataTypes.INTEGER, // comento esta linea porque tira un problema con el id al momento de levantar el servidor //
     name: DataTypes.STRING,
     facebookUrl: DataTypes.STRING,
     instagramUrl: DataTypes.STRING,
