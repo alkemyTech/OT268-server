@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {checkRol} = require('../middlewares/checkRol/checkRol');
+const {checkRol, checkRolDev} = require('../middlewares/checkRol/checkRol');
 
 const CategoryController = require('../controllers/category.controller')
 
@@ -13,7 +13,7 @@ router.get('/', checkRol, CategoryController.get);
 router.post("/", CategoryController.create);
   
   // Get By Id
-  router.get("/:id", CategoryController.getById);
+  router.get("/:id", checkRol, CategoryController.getById);
   
   //UPDATE
   router.put("/:id", CategoryController.update);

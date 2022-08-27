@@ -30,7 +30,7 @@ const getById =  (req,res) =>{
     Category.findByPk(req.params.id).then(response => {
         res.status(200).send(response);
     }).catch(err =>{
-        res.status(500).send(err);
+        res.status(404).send(err);
     })
 
 }
