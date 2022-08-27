@@ -8,7 +8,7 @@ const {
 } = process.env;
 
 class FileStorage {
-  clientConfig = {
+  #clientConfig = {
     accessKey: AWS_ACCESS_KEY_ID,
     secretKey: AWS_SECRET_ACCESS_KEY,
     region: AWS_S3_BUCKET_REGION,
