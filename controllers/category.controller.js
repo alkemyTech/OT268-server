@@ -1,6 +1,8 @@
 
 const db = require('../models/index');
 
+const {validationResult} = require('express-validator');
+
 const Category = require('../models/category')(db.sequelize, db.Sequelize.DataTypes);
 
 const get =  async (req,res) =>{
@@ -16,6 +18,11 @@ const create = (req, res) => {
     category.name = req.body.name;
     category.description = req.body.description;
     category.image= req.body.image;
+    
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
 
     Category.create(category).then(response => {
         res.status(200).send(response);
