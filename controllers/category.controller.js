@@ -4,7 +4,7 @@ const db = require('../models/index');
 const Category = require('../models/category')(db.sequelize, db.Sequelize.DataTypes);
 
 const get =  async (req,res) =>{
-    Category.findAll().then(response =>   
+    Category.findAll({attributes: ["name"]}).then(response =>   
          res.status(200).send(response)
          ).catch(err => {
             res.status(500).send(err);

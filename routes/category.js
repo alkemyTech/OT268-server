@@ -1,11 +1,13 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
+const {checkRol} = require('../middlewares/checkRol/checkRol');
 
 const CategoryController = require('../controllers/category.controller')
+
 /* GET users listing. */
 
-router.get('/', CategoryController.get);
+router.get('/', checkRol, CategoryController.get);
 
 // CREATE
 router.post("/", CategoryController.create);
