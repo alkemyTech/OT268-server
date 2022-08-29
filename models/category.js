@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Member extends Model {
+  class Category extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,18 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   };
-  Member.init({
-    //id: DataTypes.INTEGER, // comento esta linea porque tira un problema con el id al momento de levantar el servidor //
+  Category.init({
     name: DataTypes.STRING,
-    facebookUrl: DataTypes.STRING,
-    instagramUrl: DataTypes.STRING,
-    linkedinUrl: DataTypes.STRING,
+    description: DataTypes.STRING,
     image: DataTypes.STRING,
-    description: DataTypes.STRING
+    deletedAt: DataTypes.DATE
   }, {
     sequelize,
-    modelName: 'Member',
-    paranoid: true
+    modelName: 'Category',
   });
-  return Member;
+  return Category;
 };
