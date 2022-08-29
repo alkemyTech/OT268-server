@@ -1,6 +1,6 @@
 const { User } = require('../models');
 
-const logIn = async (req, res) => {
+const logIn = async (req, res, next) => {
   console.log('Post log');
   const { email, password } = req.body;
 
@@ -21,9 +21,7 @@ const logIn = async (req, res) => {
       return res.status(401).json({ ok: false });
     }
 
-    return res.status(200).json({
-      user,
-    });
+    next()
   } catch (error) {
     return res.status(404).json({ ok: false });
   }
