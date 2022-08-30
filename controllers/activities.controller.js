@@ -47,13 +47,37 @@ async  restoreActivity(req, res){
     return res.status(200).json({ok: false})
 }
 
-async  updateActivity(req, res){
+async updateActivity(req, res) {
+    try {
+        const { id } = req.params;
+        const { name, content} = req.body;
 
-    const {id, newValues} = req.body
-    const updated = await Activities.update({...newValues}, {where: {id: id}}).catch(err => console.log(err))
-    if(!updated) return res.status(400).json({ok: false})
-    return res.status(200).send(updated)
-}
+        const activitID = await Activities.findByPk(req.params.id);
+
+        const updateActivity = {
+            name,
+            content,
+        };
+
+        if (activitID) {
+            await Activities.update(updateActivity, { where: { id } });
+            return res.status(201).json({
+                msg: "Activity created",
+                updateActivity
+            });
+        } else {
+            return res.status(404).json({
+                msg: "Activity already exist",
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg: "Insuccessful update",
+            error
+        });
+    }
+};
 
 async  createActivity(req, res){
 
