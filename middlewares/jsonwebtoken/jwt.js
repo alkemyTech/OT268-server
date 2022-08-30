@@ -4,13 +4,14 @@ const jwtKey = "shhhhh" // arbitrario y sólo para el primer sprint. NO LO ALMAC
 const expirationTime = 4000*60 // arbitrario también
 
 function newToken(req, res) {
-    const { username, password } = req.body
-    if (!username || !password) {
-
+    
+    const { email , password } = req.body
+    if (!email || !password) {
+        
         return res.status(401).end()
     }
-    
-    const token = jwt.sign({ username }, jwtKey, {
+   
+    const token = jwt.sign({ email }, jwtKey, {
         algorithm: "HS256",
         expiresIn: expirationTime
         })
@@ -32,10 +33,12 @@ function authJWT(req, res){
         if (e instanceof jwt.JsonWebTokenError) return res.status(401).end()
         return res.status(400).end()
     }
-    res.send(`${payload.username} authorized`)
+    res.send(`${payload.email} authorized`)
 }
 
 module.exports = {
     newToken,
-    authJWT
+    authJWT,
+    expirationTime,
+    jwtKey
 }

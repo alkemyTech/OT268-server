@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const {newToken} = require('../middlewares/jsonwebtoken/jwt') 
 
 const { register } = require("../controllers/register.controller");
 
 const { deleteUserByIdController } = require("../controllers/user");
+const { logIn } = require("../controllers/auth.controller");
 
 /* GET users listing. */
 
