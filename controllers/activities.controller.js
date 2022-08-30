@@ -55,12 +55,31 @@ async  updateActivity(req, res){
     return res.status(200).send(updated)
 }
 
-async  createActivity(req, res){
-
-    const {newValues} = req.body
-    const created = await Activities.create({...newValues}).catch(err => console.log(err))
-    if(!created) return res.status(400).json({ok: false})
-    return res.status(200).send(created)
-}
+createActivity = async (req, res) => {
+    try {
+        const { name, content } = req.body;
+        const addActivity = {
+            name,
+            content,
+        };
+        if (name && content) {
+            const activitySave = await Activities.create(addActivity);
+            return res.status(201).json({
+                msg: "Activity created",
+                activitySave
+            });
+        } else {
+            return res.status(404).json({
+                msg: "Field name or content not found",
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg: "insuccessful creation",
+            error
+        });
+    }
+};
 }
 module.exports = { ActivitiesController };
