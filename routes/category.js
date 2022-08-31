@@ -13,7 +13,7 @@ router.get('/', checkRol, CategoryController.getAllCategory);
 router.post("/", CategoryController.createCategory);
   
   // Get By Id
-  router.get("/:id", CategoryController.getByIdCategory);
+  router.get("/:id", checkRol, CategoryController.getByIdCategory);
   
   //UPDATE
   router.put("/:id", CategoryController.updateCategory);
