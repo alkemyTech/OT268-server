@@ -15,11 +15,6 @@ const checkRol = (req, res, next) => {
     })
 }
 
-const checkRolDev = (req, res, next) => {
-    console.log("Entro a checkRolDev");
-    next();
-}
 module.exports = {
     checkRol,
-    checkRolDev
 }
