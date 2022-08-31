@@ -9,12 +9,8 @@ const {
 
 
 router.get('/all', getAllActivities);
-
 router.post('/', createActivity)
-
 router.put('/:id', updateActivity);
-
 router.delete('/:name', deleteActivity);
-
 
 module.exports = router;

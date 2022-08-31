@@ -45,7 +45,7 @@ const deleteActivity = async (req, res) => {
 }
 
 /******************************
-    ?
+            ?
 *******************************/
 
 const restoreActivity = async (req, res) => {

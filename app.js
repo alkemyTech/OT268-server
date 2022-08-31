@@ -34,10 +34,11 @@ app.use('/users', usersRouter);
 
 app.use('/category', categoryRouter);
 
-app.use('/activities', activitiesRouter);
 
 app.use('/organizations', organizationsRouter);
 app.use('/auth', authRouter);
+
+app.use('/activities', activitiesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
