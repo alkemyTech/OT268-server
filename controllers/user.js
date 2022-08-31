@@ -22,6 +22,17 @@ async function deleteUserByIdController(req, res, next) {
   }
 }
 
+async function listUsersController(req, res) {
+  try {
+    const users = await User.findAll();
+
+    return res.status(200).json(users);
+  } catch (error) {
+    res.status(500).send({ message: 'Ok' });
+  }
+}
+
 module.exports = {
   deleteUserByIdController,
+  listUsersController,
 };

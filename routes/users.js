@@ -1,18 +1,21 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const { adminAuthentication } = require('../middlewares/adminAuth/userAdmin');
 
-const { register } = require("../controllers/register.controller");
+const { register } = require('../controllers/register.controller');
 
-const { deleteUserByIdController } = require("../controllers/user");
+const {
+  deleteUserByIdController,
+  listUsersController,
+} = require('../controllers/user');
 
 /* GET users listing. */
 
-router.get("/", function (req, res, next) {
-  res.send("respond with a resource");
-});
+// Only admin can access this endpoint
+router.get('/', adminAuthentication, listUsersController);
 
-router.delete("/:id", deleteUserByIdController);
+router.delete('/:id', deleteUserByIdController);
 
-router.post("/auth/register", register);
+router.post('/auth/register', register);
 
 module.exports = router;
