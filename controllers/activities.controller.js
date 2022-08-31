@@ -1,85 +1,129 @@
-const {Activities} = require ('../models/activities');
 
-class ActivitiesController {
+const models = require('../models');
+const { Activities } = models
 
-constructor() { }
+/******************************
+    OBTENER ACTIVIDAD POR ID
+*******************************/
 
-async getAtivityById(req, res) {
+const getAtivityById = async (req, res) => {
 
-    const {id} = req.params 
+    const { id } = req.params
     const activiti = await Activities.findByPk(id).catch(err => console.log(err))
-    if(!activiti) return res.status(404).json( {ok: false})
-    return res.status(200).json({activiti})
+    if (!activiti) return res.status(404).json({ ok: false })
+    return res.status(200).json({ activiti })
 }
 
-async  getAllActivities(req, res) { 
-    
+/******************************
+    OBTENER TODAS ACTIVIDADES 
+*******************************/
+
+const getAllActivities = async (req, res) => {
+
     const activities = await Activities.findAll().catch(err => console.log(err))
-    if(!activities) return res.status(404).json( {ok: false})
-    return res.status(200).json({ activities})
+    if (!activities) return res.status(404).json({ ok: false })
+    return res.status(200).json({ activities })
 }
 
-async  deleteActivity(req, res) {
+/******************************
+    ELIMINAR ACTIVIDAD POR ID
+*******************************/
 
-    const {id} = req.body
-    if(!id) return res.status(400).send("no id found");
+const deleteActivity = async (req, res) => {
+
+    const { id } = req.body
+    if (!id) return res.status(400).send("no id found");
 
     const isDeleted = await Activities.destroy({
         where: {
             id: id
         }
     }).catch(err => console.log(err))
-    if(!isDeleted) return res.status(400).send(`Deletion failed Activity`).json({ok: false})
-    return res.status(200).json({ok: false})
+    if (!isDeleted) return res.status(400).send(`Deletion failed Activity`).json({ ok: false })
+    return res.status(200).json({ ok: false })
 
 }
 
-async  restoreActivity(req, res){
+/******************************
+    ?
+*******************************/
 
-    const {id} = req.body
-    if(!id) return res.status(404).send("no id found")
+const restoreActivity = async (req, res) => {
+
+    const { id } = req.body
+    if (!id) return res.status(404).send("no id found")
     const isRestored = await Activities.restore({
         where: {
             id: id
         }
     }).catch(err => console.log(err))
-    if(!isRestored) return res.status(400).send("restoring failed").json({ok: false})
-    return res.status(200).json({ok: false})
+    if (!isRestored) return res.status(400).send("restoring failed").json({ ok: false })
+    return res.status(200).json({ ok: false })
 }
 
-async  updateActivity(req, res){
 
-    const {id, newValues} = req.body
-    const updated = await Activities.update({...newValues}, {where: {id: id}}).catch(err => console.log(err))
-    if(!updated) return res.status(400).json({ok: false})
-    return res.status(200).send(updated)
-}
+/***********************************
+    ACTUALIZAR ACTIVIDAD POR NOMBRE 
+************************************/
 
-createActivity = async (req, res) => {
+
+const updateActivity = async (req, res) => {
+    let activities = {};
+    const { id } = req.params;
+    const {
+        name,
+        content,
+        image
+    } = req.body;
+
     try {
-        const { name, content } = req.body;
-        const addActivity = {
+        const article = await Activities.findOne({ where: { id } });
+        activities = await article.update({
             name,
             content,
-        };
-        if (name && content) {
-            const activitySave = await Activities.create(addActivity);
-            return res.status(201).json({
-                msg: "Activity created",
-                activitySave
-            });
-        } else {
-            return res.status(404).json({
-                msg: "Field name or content not found",
-            });
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            msg: "insuccessful creation",
-            error
+            image
         });
-    }
+        res.json(activities)
+    } catch (error) {
+        res.status(500).json({
+            message: error.message,
+        });
+    };
 };
-}
-module.exports = { ActivitiesController };
+
+/******************************
+    CREAR ACTIVIDAD 
+*******************************/
+
+const createActivity = async (req, res) => {
+    let activities = {};
+    const {
+        name,
+        content,
+        image
+    } = req.body;
+
+    try {
+        activities = await Activities.create({
+            name,
+            content,
+            image
+        });
+        res.json(activities)
+    } catch (error) {
+        res.status(500).json({
+            message: error.message,
+        });
+
+    };
+};
+
+
+module.exports = {
+    createActivity,
+    updateActivity,
+    restoreActivity,
+    deleteActivity,
+    getAllActivities,
+    getAtivityById
+};
