@@ -19,6 +19,23 @@ class FileStorage {
   constructor() {
     this.client = new AWS.S3(this.#clientConfig);
   }
+
+  async uploadImage(file, name, bucket = this.#bucketName) {
+    try {
+      const params = {
+        Bucket: bucket,
+        Key: name,
+        Body: file,
+      };
+
+      const uploadedImage = await this.client.upload(params).promise();
+
+      return uploadedImage.Location;
+    } catch (error) {
+      console.log(error);
+      return {err: error};
+    }
+  }
 }
 
 module.exports = new FileStorage();
