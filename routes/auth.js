@@ -3,7 +3,7 @@ const router = express.Router();
 const { check } = require('express-validator');
 
 const { logIn } = require('../controllers/auth.controller');
-const {newToken} = require('../middlewares/jsonwebtoken/jwt')
+const {newToken, authJWT} = require('../middlewares/jsonwebtoken/jwt')
 
 router.post(
   '/login',
@@ -17,5 +17,5 @@ router.post(
   logIn, 
   newToken
 );
-
+router.get('/me', authJWT)
 module.exports = router;
