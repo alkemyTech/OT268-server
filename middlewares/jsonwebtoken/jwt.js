@@ -35,7 +35,7 @@ function authJWT(req, res){
     res.send(`${payload.username} authorized`)
 }
 
-modeule.exports = {
+module.exports = {
     newToken,
     authJWT
 }

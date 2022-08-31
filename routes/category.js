@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
+const {checkRol} = require('../middlewares/checkRol/checkRol');
 
-const {checkRol, checkRolDev} = require('../middlewares/checkRol/checkRol');
 
 const CategoryController = require('../controllers/category.controller')
 
@@ -20,10 +20,10 @@ router.post("/",
   router.get("/:id", checkRol, CategoryController.getByIdCategory);
   
   //UPDATE
-  router.put("/:id", CategoryController.updateCategory);
+  router.put("/:id", checkRol, CategoryController.updateCategory);
   
   //DELETE
-  router.delete("/:id", CategoryController.deleteByIdCategory);
+  router.delete("/:id", checkRol, CategoryController.deleteByIdCategory);
   
 
 module.exports = router;

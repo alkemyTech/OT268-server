@@ -1,6 +1,6 @@
 const jwtDecode = require('jwt-decode');
-const db = require('../models/index');
-const Rol = require('../models/role')(db.sequelize, db.Sequelize.DataTypes);
+const db = require('../../models/index');
+const Rol = require('../../models/role')(db.sequelize, db.Sequelize.DataTypes);
 
 
 const checkRol = (req, res, next) => {
