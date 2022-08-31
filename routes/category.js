@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {checkRol, checkRolDev} = require('../middlewares/checkRol/checkRol');
+const {checkRol} = require('../middlewares/checkRol/checkRol');
 
 const CategoryController = require('../controllers/category.controller')
 
