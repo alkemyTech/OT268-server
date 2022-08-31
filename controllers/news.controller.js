@@ -61,15 +61,16 @@ const updateNews = async (req, res) => {
 
     try {
         const article = await News.findOne({ where: { id } });
+        if(!article) return res.status(404).send("news not found")
         news = await article.update({
             name,
             content,
             image,
             categoryId
         });
-        res.json(news)
+        return res.status(200).json(news)
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             message: error.message,
         });
     };
@@ -91,6 +92,9 @@ const deleteNews = async (req, res) => {
         });
     };
 }
+
+ 
+
 
 
 module.exports = {
