@@ -38,5 +38,4 @@ function authJWT(req, res){
 module.exports = {
     newToken,
     authJWT
-
 }
