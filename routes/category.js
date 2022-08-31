@@ -7,19 +7,19 @@ const CategoryController = require('../controllers/category.controller')
 
 /* GET users listing. */
 
-router.get('/', checkRol, CategoryController.get);
+router.get('/', checkRol, CategoryController.getAllCategory);
 
 // CREATE
-router.post("/", CategoryController.create);
+router.post("/", CategoryController.createCategory);
   
   // Get By Id
-  router.get("/:id", checkRol, CategoryController.getById);
+  router.get("/:id", checkRol, CategoryController.getByIdCategory);
   
   //UPDATE
-  router.put("/:id", CategoryController.update);
+  router.put("/:id", CategoryController.updateCategory);
   
   //DELETE
-  router.delete("/:id", CategoryController.deleteById);
+  router.delete("/:id", CategoryController.deleteByIdCategory);
   
 
 module.exports = router;
