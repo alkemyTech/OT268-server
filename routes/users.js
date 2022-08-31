@@ -14,7 +14,7 @@ router.get("/", function (req, res, next) {
 });
 
 router.delete("/:id", deleteUserByIdController);
-
+router.patch('/:id', updateUserController)
 router.post("/auth/register", register);
 
 module.exports = router;
