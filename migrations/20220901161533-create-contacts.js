@@ -13,16 +13,19 @@ module.exports = {
         allowNull: false
       },
       phone: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.INTEGER,
+        validate: {
+          isInt: true,
+          len: [10],
+        },
       },
       email: {
+        allowNull: false,
         type: Sequelize.STRING,
-        allowNull: false
       },
       message: {
         type: Sequelize.STRING,
-        allowNull: false
+    
       },
       deletedAt: {
         type: Sequelize.DATE,
