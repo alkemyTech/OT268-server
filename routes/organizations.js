@@ -1,5 +1,5 @@
 const express = require('express');
-const { getOrganizationController } = require('../controllers/organization');
+const { getOrganizationController } = require('../controllers/organization.controller');
 const router = express.Router();
 
 /* GET organizations listing. */
