@@ -4,7 +4,5 @@ node_modules
 package-lock.json
 yarn.lock
 docker-compose.yml
-libs
-db
 mysql_data
 package.json
