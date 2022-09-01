@@ -8,6 +8,7 @@ require('dotenv').config();
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const activitiesRouter = require('./routes/activities');
 
 const organizationsRouter = require('./routes/organizations');
 
@@ -34,9 +35,12 @@ app.use('/users', usersRouter);
 
 app.use('/category', categoryRouter);
 
+
 app.use('/organizations', organizationsRouter);
 app.use('/auth', authRouter);
 app.use("/news", newRouter);
+
+app.use('/activities', activitiesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
