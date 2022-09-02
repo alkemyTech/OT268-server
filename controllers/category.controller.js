@@ -1,21 +1,28 @@
 
 const db = require('../models/index');
 
+const {validationResult} = require('express-validator');
+
 const Category = require('../models/category')(db.sequelize, db.Sequelize.DataTypes);
 
-const get =  async (req,res) =>{
-    Category.findAll().then(response =>   
+const getAllCategory =  async (req,res) =>{
+    Category.findAll({attributes: ["name"]}).then(response =>   
          res.status(200).send(response)
          ).catch(err => {
             res.status(500).send(err);
         });
 }
 
-const create = (req, res) => {
+const createCategory = (req, res) => {
     const category = {};
     category.name = req.body.name;
     category.description = req.body.description;
     category.image= req.body.image;
+    
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
 
     Category.create(category).then(response => {
         res.status(200).send(response);
@@ -25,17 +32,17 @@ const create = (req, res) => {
 
 }
 
-const getById =  (req,res) =>{
+const getByIdCategory =  (req,res) =>{
 
     Category.findByPk(req.params.id).then(response => {
         res.status(200).send(response);
     }).catch(err =>{
-        res.status(500).send(err);
+        res.status(404).send(err);
     })
 
 }
 
-const update =  (req,res) =>{
+const updateCategory =  (req,res) =>{
 
     let upData = {};
     req.body.name !== "" ? (upData.name = req.body.name) : "";
@@ -50,7 +57,7 @@ const update =  (req,res) =>{
 
 }
 
-const deleteById =  (req,res) =>{
+const deleteByIdCategory =  (req,res) =>{
 
     Category.destroy({where: {id: req.params.id}}).then(response => {
         res.sendStatus(200).send(response);
@@ -62,10 +69,10 @@ const deleteById =  (req,res) =>{
 
 
 module.exports = {
-    get,
-    create,
-    getById,
-    update,
-    deleteById,
+    getAllCategory,
+    createCategory,
+    getByIdCategory,
+    updateCategory,
+    deleteByIdCategory,
   };
   
