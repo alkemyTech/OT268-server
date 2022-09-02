@@ -1,8 +1,10 @@
 const { User } = require('../models');
 
+
 const logIn = async (req, res, next) => {
   console.log('Post log');
   const { email, password } = req.body;
+  console.log(email, password)
 
   try {
     const user = await User.findOne({
