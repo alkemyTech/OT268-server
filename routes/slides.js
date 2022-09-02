@@ -20,7 +20,7 @@ const SlidesController = require('../controllers/slides.controller')
 
 
 //UPDATE
-  router.put("/:id", checkRol, SlidesController.updateCategory);
+  router.put("/:id", checkRol, SlidesController.updateSlides);
   
 
 module.exports = router;
