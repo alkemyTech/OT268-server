@@ -11,11 +11,12 @@ const {
 
 /* GET users listing. */
 
-// Only admin can access this endpoint
-router.get('/', adminAuthentication, listUsersController);
+router.get('/', function (req, res, next) {
+  res.send('respond with a resource');
+});
 
 router.delete('/:id', deleteUserByIdController);
-
+router.patch('/:id', updateUserController);
 router.post('/auth/register', register);
 
 module.exports = router;
