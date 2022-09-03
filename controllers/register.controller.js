@@ -7,7 +7,7 @@ const detailMessage = require("../middlewares/mailer/templateMail");
 const register = async (req, res) => {
   try {
     const { firstName, lastName, password, image, email, roleId } = req.body;
-    console.log(firstName, lastName, password, image, email);
+  
 
     if (!firstName && !lastName && !email && !password && !image) {
       res.status(400).send("all input are require");
@@ -38,7 +38,7 @@ const register = async (req, res) => {
 
     sendEmail(
       email,
-      `Bienvenido ${firstNameUpperCase} ${lastNameUpperCase} a la ONG Somos Mas!!`,
+      `Bienvenido ${firstNameUpperCase} ${lastNameUpperCase} a ONG Somos Mas!!`,
       detailMessage(
         "Bienvenido a Ong Somos Mas",
         "Gracias por registrarse con nosotros, vamos a estar respondiendo su consulta pronto",

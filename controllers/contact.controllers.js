@@ -18,7 +18,7 @@ const getContactInformation = async (req, res) => {
 
 const postContactInformation = async (req, res) => {
   const { name, email, phone, message } = req.body;
-  console.log(name, email);
+  
   try {
     if (name.length && email.length <= 0) {
       return res.status(404).send("complete alguno de los campos faltantes");
@@ -37,13 +37,13 @@ const postContactInformation = async (req, res) => {
       message: message,
     });
 
-    const welcomeMessage = `Gracias ${name} por contactatarse con nosotros`;
+    
     emailSend(
       email.toLowerCase(),
-      welcomeMessage,
+      "Bienvenido a ONG Somos Mas",
       detailMessage(
         "Bienvenido a Ong Somos Mas",
-        "Gracias por contactarse con nosotros, vamos a estar respondiendo su consulta pronto",
+      `Gracias ${name} por contactarse con nosotros, vamos a estar respondiendo su consulta pronto`,
         email.toLowerCase()
       )
     );
