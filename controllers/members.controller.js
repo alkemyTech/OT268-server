@@ -53,7 +53,7 @@ async function updateMember(req, res){
 async function createMember(req, res){
 
     const {newMember} = req.body
-    if(newMember.name) return res.status(400).send("name cannot be null")
+    if(!newMember.name || typeof newMember.name != 'string') return res.status(400).send("name has to be a non-empty string")
     const created = await Member.create({...newValues}).catch(err => {return res.status(500).send(err)})
     if(!created) return res.status(400).json({ok: false})
     return res.status(200).send(created)
