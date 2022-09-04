@@ -10,7 +10,7 @@ async function getMemberById(req, res) {
 
 async function getAllMembers(req, res) { 
     
-    const members = await Member.findAll().catch(err => console.log(err))
+    const members = await Member.findAll().catch(err => {return res.status(500).send(err)})
     if(!members) return res.status(404).json( {ok: false})
     return res.status(200).json({ members})
 }
