@@ -17,15 +17,15 @@ async function getAllMembers(req, res) {
 
 async function deleteMember(req, res) {
 
-    const {id} = req.body
+    const {id} = req.params
     if(!id) return res.status(400).send("no id found")
     const isDeleted = await Member.destroy({
         where: {
             id: id
         }
-    }).catch(err => console.log(err))
+    }).catch(err => {return res.status(500).send(err)})
     if(!isDeleted) return res.status(400).send("deletion failed").json({ok: false})
-    return res.status(200).json({ok: false})
+    return res.status(200).json({ok: true})
 
 }
 
