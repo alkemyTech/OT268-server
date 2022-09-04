@@ -19,11 +19,9 @@ async function deleteMember(req, res) {
 
     const {id} = req.params
     if(!id) return res.status(400).send("no id found")
-    const isDeleted = await Member.destroy({
-        where: {
-            id: id
-        }
-    }).catch(err => {return res.status(500).send(err)})
+    const member = await Member.findByPk(id).catch(err => {return res.status(500).send(err)})
+    if(!member) return res.status(400).send("member doesn't exist")
+    const isDeleted = await member.destroy().catch(err => {return res.status(500).send(err)})
     if(!isDeleted) return res.status(400).send("deletion failed").json({ok: false})
     return res.status(200).json({ok: true})
 
