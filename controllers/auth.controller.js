@@ -12,7 +12,7 @@ const logIn = async (req, res, next) => {
       res.status(400).send("all input are required");
     }
 
-    const user = await User.findOne({ where: { email: email } });
+    const user = await User.findOne({ where: { email: email.toLowerCase() } });
 
     if (user && (await bcrypt.compare(password, user.password))) {
       let token = jwt.sign(
