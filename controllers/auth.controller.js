@@ -29,35 +29,12 @@ const logIn = async (req, res, next) => {
 
       return res.status(200).json({ token });
     }
-    //next()
+    
   } catch (error) {
     return res.status(404).json({ ok: false });
   }
 };
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// try {
-//   const user = await User.findOne({
-//     where: {
-//       email,
-//     },
-//   });
-
-//   if (!user) {
-//     return res.status(404).json({ ok: false });
-//   }
-
-//   const isPasswordValid = password === user.password;
-
-//   if (!isPasswordValid) {
-//     return res.status(401).json({ ok: false });
-//   }
-
-//   next()
-// } catch (error) {
-//   return res.status(404).json({ ok: false });
-// }
-// };
 
 module.exports = {
   logIn,
