@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { register } = require("../controllers/register.controller");
 
-const { deleteUserByIdController } = require("../controllers/user");
+const { deleteUserByIdController } = require("../controllers/user.controller");
 
 /* GET users listing. */
 
