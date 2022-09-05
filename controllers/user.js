@@ -22,19 +22,32 @@ async function deleteUserByIdController(req, res, next) {
   }
 }
 
-async function updateUserController(req, res){
-
-  const {id} = req.params
-  const {newValues} = req.body
-  if(!id) return res.status(404).send("user not found")
-  const updatedUser = await Member.update({...newValues}, {where: {id: id}}).catch(err => {return res.status(500).send(err)})
-  if(!updatedUser) return res.status(500).send("internal error")
-  return res.status(200).send(updatedUser)
-
+async function updateUserController(req, res) {
+  const { id } = req.params;
+  const { newValues } = req.body;
+  if (!id) return res.status(404).send('user not found');
+  const updatedUser = await Member.update(
+    { ...newValues },
+    { where: { id: id } }
+  ).catch((err) => {
+    return res.status(500).send(err);
+  });
+  if (!updatedUser) return res.status(500).send('internal error');
+  return res.status(200).send(updatedUser);
 }
 
+async function listUsersController(req, res) {
+  try {
+    const users = await User.findAll();
+
+    return res.status(200).json(users);
+  } catch (error) {
+    res.status(500).send({ message: 'Ok' });
+  }
+}
 
 module.exports = {
   deleteUserByIdController,
-  updateUserController
+  updateUserController,
+  listUsersController,
 };
