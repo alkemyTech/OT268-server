@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { register } = require("../controllers/register.controller");
 
-const { deleteUserByIdController } = require("../controllers/user");
+const { deleteUserByIdController } = require("../controllers/user.controller");
 
 /* GET users listing. */
 
@@ -12,7 +12,7 @@ router.get("/", function (req, res, next) {
 });
 
 router.delete("/:id", deleteUserByIdController);
-router.patch('/:id', updateUserController)
+//router.patch('/:id', updateUserController)
 router.post("/auth/register", register);
 
 module.exports = router;
