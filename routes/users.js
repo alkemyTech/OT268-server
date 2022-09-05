@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const { register } = require("../controllers/register.controller");
+const { register } = require("../controllers/register");
 
-const { deleteUserByIdController } = require("../controllers/user.controller");
+const { deleteUserByIdController } = require("../controllers/user");
 
 /* GET users listing. */
 
