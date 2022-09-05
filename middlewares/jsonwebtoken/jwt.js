@@ -1,4 +1,5 @@
 
+
 const jwt = require('jsonwebtoken')
 
 const jwtKey = "shhhhh" // arbitrario y sólo para el primer sprint. NO LO ALMACENEN EN LA FUNCIÓN SINO EN UN ARCHIVO .ENV
