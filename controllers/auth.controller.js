@@ -19,7 +19,7 @@ const logIn = async (req, res, next) => {
 
     if (!isPasswordValid) {
       return res.status(401).json({ ok: false });
-    }
+     }
 
     next()
   } catch (error) {
