@@ -10,22 +10,20 @@ async function getMemberById(req, res) {
 
 async function getAllMembers(req, res) { 
     
-    const members = await Member.findAll().catch(err => console.log(err))
+    const members = await Member.findAll().catch(err => {return res.status(500).send(err)})
     if(!members) return res.status(404).json( {ok: false})
     return res.status(200).json({ members})
 }
 
 async function deleteMember(req, res) {
 
-    const {id} = req.body
+    const {id} = req.params
     if(!id) return res.status(400).send("no id found")
-    const isDeleted = await Member.destroy({
-        where: {
-            id: id
-        }
-    }).catch(err => console.log(err))
+    const member = await Member.findByPk(id).catch(err => {return res.status(500).send(err)})
+    if(!member) return res.status(400).send("member doesn't exist")
+    const isDeleted = await member.destroy().catch(err => {return res.status(500).send(err)})
     if(!isDeleted) return res.status(400).send("deletion failed").json({ok: false})
-    return res.status(200).json({ok: false})
+    return res.status(200).json({ok: true})
 
 }
 
@@ -52,8 +50,9 @@ async function updateMember(req, res){
 
 async function createMember(req, res){
 
-    const {newValues} = req.body
-    const created = await Member.create({...newValues}).catch(err => console.log(err))
+    const {newMember} = req.body
+    if(!newMember.name || typeof newMember.name != 'string') return res.status(400).send("name has to be a non-empty string")
+    const created = await Member.create({...newValues}).catch(err => {return res.status(500).send(err)})
     if(!created) return res.status(400).json({ok: false})
     return res.status(200).send(created)
 }
