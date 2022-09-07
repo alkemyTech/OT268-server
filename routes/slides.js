@@ -13,7 +13,7 @@ const {
 router.get('/', SlidesController.getAllSlides);
 
 //Get list Slide
-router.get('/', getSlideList);
+router.get('/',checkRol, getSlideList);
 
 //DELETE
   router.delete("/:id", checkRol, SlidesController.deleteByIdSlides);
