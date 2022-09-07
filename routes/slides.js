@@ -3,6 +3,7 @@ const router = express.Router();
 const {checkRol} = require('../middlewares/checkRol/checkRol');
 const SlidesController = require('../controllers/slides.controller')
 const {
+  getSlideById,
     getSlideList
 } = require('../controllers/slides.controller');
 
@@ -17,6 +18,8 @@ router.get('/',checkRol, getSlideList);
 
 //DELETE
   router.delete("/:id", checkRol, SlidesController.deleteByIdSlides);
- 
+
+// Obtener detalles mediante get ID
+router.get('/:id', getSlideById);
 
 module.exports = router;
