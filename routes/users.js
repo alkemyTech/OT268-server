@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { adminAuthentication } = require('../middlewares/adminAuth/userAdmin');
 
-const { register } = require("../controllers/register");
+const { register } = require("../controllers/register.controller");
 
 
 const {
