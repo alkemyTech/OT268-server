@@ -3,7 +3,8 @@ const router = express.Router();
 const {checkRol} = require('../middlewares/checkRol/checkRol');
 const SlidesController = require('../controllers/slides.controller')
 const {
-  getSlideById
+  getSlideById,
+    getSlideList
 } = require('../controllers/slides.controller');
 
 //UPDATE
@@ -11,6 +12,9 @@ const {
 
 /* GET Slides listing. */
 router.get('/', SlidesController.getAllSlides);
+
+//Get list Slide
+router.get('/',checkRol, getSlideList);
 
 //DELETE
   router.delete("/:id", checkRol, SlidesController.deleteByIdSlides);
