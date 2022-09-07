@@ -36,9 +36,30 @@ const deleteByIdSlides =  (req,res) =>{
  
 }
 
+const getSlideById = async (req, res) => {
+    const { id } = req.params;
+    let slide;
+    try {
+        slide = await Slides.findByPk(id);
+    } catch (error) {
+        res.status(500).json({
+            message: error.message,
+        });
+
+    };
+    if (!slide) {
+        return res.status(404).json({ message: 'slide not found' });
+    }
+    return res.json(slide);
+}
+
+
+
+
 module.exports = {
     getAllSlides, 
     updateSlides,
-    deleteByIdSlides
+    deleteByIdSlides,
+    getSlideById
   };
   
