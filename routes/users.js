@@ -3,10 +3,10 @@ const router = express.Router();
 const { adminAuthentication } = require('../middlewares/adminAuth/userAdmin');
 
 const { register } = require('../controllers/register.controller');
-
 const {
   deleteUserByIdController,
   listUsersController,
+  updateUserController
 } = require('../controllers/user');
 
 /* GET users listing. */
