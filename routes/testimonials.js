@@ -12,5 +12,6 @@ const {
 
 
 router.put('/:id',checkRol, updateTestimonial );
+router.put('/:id',checkRol, deleteTestimonial );
 
 module.exports = router;
