@@ -15,6 +15,7 @@ const organizationsRouter = require('./routes/organizations');
 const authRouter = require('./routes/auth');
 const categoryRouter = require('./routes/category');
 const newRouter = require("./routes/news")
+const contacts = require("./routes/contacts")
 
 const slidesRouter = require("./routes/slides")
 
@@ -45,6 +46,7 @@ app.use("/news", newRouter);
 app.use("/slides", slidesRouter);
 
 app.use('/activities', activitiesRouter);
+app.use('/contacts', contacts);
 
 //static Images Folder
 app.use('/uploads', express.static('./uploads'))

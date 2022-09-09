@@ -6,7 +6,7 @@ const Rol = require('../../models/role')(db.sequelize, db.Sequelize.DataTypes);
 const checkRol = (req, res, next) => {
     const tokenDecode = jwtDecode(req.headers['token']);
 
-    Rol.findByPk(tokenDecode.roleId).then(item => {
+    Rol.findByPk(tokenDecode.user_roleId).then(item => {
         if (item.name == "Admin") {
             next();
         } else {
