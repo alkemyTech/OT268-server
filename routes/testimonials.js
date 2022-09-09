@@ -13,4 +13,6 @@ const {
 
 router.put('/:id',checkRol, updateTestimonial );
 
+router.post('/:id',checkRol, createTestimonials );
+
 module.exports = router;
