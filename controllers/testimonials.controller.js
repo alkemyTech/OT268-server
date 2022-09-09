@@ -18,7 +18,7 @@ const getAllTestimonials = async (req, res) => {
 
 const deleteTestimonial = async (req, res) => {
 
-    const {id} = req.body
+    const {id} = req.params;
     if(!id) return res.status(400).send("no id found");
 
     const isDeleted = await Testimonials.destroy({
