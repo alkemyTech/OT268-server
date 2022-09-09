@@ -1,5 +1,10 @@
 const db = require('../models/index');
 const Slides = require('../models/slides')(db.sequelize, db.Sequelize.DataTypes);
+// image Upload
+const multer = require('multer')
+const path = require('path')
+var fs = require('fs');
+const DecodingImage = require('../helpers/imageDecode');
 
 
 const updateSlides = (req, res) => {
@@ -54,6 +59,8 @@ const getSlideList = async (req, res) => {
     };
 }
 
+//Obtener Slide por ID
+
 const getSlideById = async (req, res) => {
     const { id } = req.params;
     let slide;
@@ -71,7 +78,49 @@ const getSlideById = async (req, res) => {
     return res.json(slide);
 }
 
+//Crear Slide
 
+const creationSlide = async (req, res, next) => {
+
+    const { imageBase64, text, order } = req.body;
+    let slide;
+    let imageUrl 
+    try {
+        imageUrl = await DecodingImage.decoding(imageBase64);
+    } catch (error) {
+        res.status(500).json({
+            message: error.message,
+        });
+
+    };
+
+    try {
+        slide = await Slides.create({
+            imageUrl,
+            text,
+            order
+        });
+        res.json(slide)
+    } catch (error) {
+        res.status(500).json({
+            message: error.message,
+        });
+
+    };
+
+}
+const upload = async (req, res) => {
+    if (req.file.filename) {
+        res.status(201).json({
+            mesaage: "Image upload successfully",
+            url: req.file.filename
+        });
+    } else {
+        res.status(500).json({
+            mesaage: "Something went wrong!"
+        });
+    }
+}
 
 
 module.exports = {
@@ -79,11 +128,13 @@ module.exports = {
     updateSlides,
     deleteByIdSlides,
     getSlideList,
-    getSlideById
-  };
-  
+    getSlideById,
+    creationSlide,
+    upload
+};
 
-    
+
+
 
 
 
