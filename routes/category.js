@@ -34,4 +34,5 @@ router.put('/:id', checkRol, CategoryController.updateCategory);
 //DELETE
 router.delete('/:id', checkRol, CategoryController.deleteByIdCategory);
 
+
 module.exports = router;
