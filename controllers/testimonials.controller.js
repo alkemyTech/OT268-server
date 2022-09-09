@@ -64,7 +64,7 @@ const createTestimonials = async (req, res) =>{
     if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array() });
     }
-    const res = await Testimonials.create({...newValues}).catch(err => console.log(err))
+    const res = await Testimonials.create({...Testimonial}).catch(err => console.log(err))
     if(!res) return res.status(400).json({ok: false})
     return res.status(200).send(res)
 }
