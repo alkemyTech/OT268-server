@@ -10,8 +10,12 @@ module.exports = {
     const adminPassword = bcrypt.hashSync(adminPass, 5);
     const regularPassword = bcrypt.hashSync(regularPass, 5);
     let userJSON = [];
-    for (var i = 1; i <= 10; i++) {
-      adminJSON.push({
+
+    for (let i = 1; i <= 10; i++) {
+      
+     
+   
+      userJSON.push({
         firstName: "adminTest" + i,
         lastName: "adminTest" + i,
         email: `admin@test${+i}.com`,
@@ -22,26 +26,32 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       });
-    }
-    
-    for (var i = 1; i <= 10; i++) {
-      userJSON.push({
-        firstName: "regularTest" + i,
+      if(userJSON.length === 10){
+       break;
+     }
+     userJSON.push({
+      firstName: "regularTest" + i,
         lastName: "regularTest" + i,
         email: `regular@test${+i}.com`,
-        password: regularPassword,
+        password:  regularPassword,
         image:
           "https://www.designevo.com/res/templates/thumb_small/colorful-hand-and-warm-community.png",
         roleId: 2,
         createdAt: new Date(),
         updatedAt: new Date(),
-      });
-   
+     })
+       
     }
-    await queryInterface.bulkInsert("Users", userJSON, {});
+      
+     
+    
+   await queryInterface.bulkInsert("Users", userJSON, {});
+    
+    
+    
   },
 
   down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete("Users", null, {});
   },
-};
+}
