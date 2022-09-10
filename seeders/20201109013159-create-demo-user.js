@@ -9,7 +9,7 @@ module.exports = {
 
     const adminPassword = bcrypt.hashSync(adminPass, 5);
     const regularPassword = bcrypt.hashSync(regularPass, 5);
-    let adminJSON = [];
+    let userJSON = [];
     for (var i = 1; i <= 10; i++) {
       adminJSON.push({
         firstName: "adminTest" + i,
@@ -23,9 +23,9 @@ module.exports = {
         updatedAt: new Date(),
       });
     }
-    let regularJSON = [];
+    
     for (var i = 1; i <= 10; i++) {
-      adminJSON.push({
+      userJSON.push({
         firstName: "regularTest" + i,
         lastName: "regularTest" + i,
         email: `regular@test${+i}.com`,
@@ -36,9 +36,9 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       });
-      var allUsers = [...adminJSON, ...regularJSON];
+   
     }
-    await queryInterface.bulkInsert("Users", allUsers, {});
+    await queryInterface.bulkInsert("Users", userJSON, {});
   },
 
   down: async (queryInterface, Sequelize) => {
