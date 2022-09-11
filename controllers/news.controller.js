@@ -6,10 +6,30 @@ const { News } = models
 const getAllNews = async (req, res) => {
 
     let news = {};
+    const { page } = req.query;
+    news = await News.findAll();
 
     try {
-        news = await News.findAll();
-        res.json(news)
+       
+        if (page) {
+            const countNews = news.length
+            const totalPage = Number.isInteger(countNews / 10) ? countNews / 10 : parseInt(countNews / 10) + 1;
+            let validPage = parseInt(page) <= 0 ? 1 : page > totalPage ? totalPage : page;
+            
+            await News.findAndCountAll({ limit: 10, offset: (validPage - 1) * 10 })
+                .then(response => {
+                    res.status(200).send({
+                        nextPage: parseInt(validPage) == totalPage ? '' : parseInt(validPage) + 1,
+                        prevPage: parseInt(validPage) > 1 ? parseInt(validPage) - 1 : '',
+                        News: response
+                    });
+                });
+
+        } else {
+            res.json(news)
+        }
+
+
     } catch (error) {
         res.status(500).json({
             message: error.message,
@@ -61,7 +81,7 @@ const updateNews = async (req, res) => {
 
     try {
         const article = await News.findOne({ where: { id } });
-        if(!article) return res.status(404).send("news not found")
+        if (!article) return res.status(404).send("news not found")
         news = await article.update({
             name,
             content,
@@ -82,7 +102,7 @@ const deleteNews = async (req, res) => {
         const { id } = req.params;
         const oldId = await News.findByPk(id);
 
-        if(!oldId) return res.status(404).send(`the New with ID = ${id} not exist`);
+        if (!oldId) return res.status(404).send(`the New with ID = ${id} not exist`);
 
         const news = await News.destroy({ where: { id: +id } });
         res.status(201).json({
@@ -96,7 +116,7 @@ const deleteNews = async (req, res) => {
     };
 }
 
- 
+
 
 
 
