@@ -1,10 +1,15 @@
 const db = require('../models/index');
 const Slides = require('../models/slides')(db.sequelize, db.Sequelize.DataTypes);
+const sequelize = require('sequelize');
+
 // image Upload
-const multer = require('multer')
-const path = require('path')
-var fs = require('fs');
-const DecodingImage = require('../helpers/imageDecode');
+
+const { uploadFile } = require('../services/aws/sss/file/index')
+require('dotenv').config()
+const AWS_BUCKET_NAME = process.env.AWS_BUCKET_NAME
+const AWS_BUCKET_REGION = process.env.AWS_BUCKET_REGION
+
+
 
 
 const updateSlides = (req, res) => {
@@ -81,46 +86,50 @@ const getSlideById = async (req, res) => {
 //Crear Slide
 
 const creationSlide = async (req, res, next) => {
-
-    const { imageBase64, text, order } = req.body;
+    //Recibo la imagen a almacenar
+    let {order, text} = req.body;
+    imageUrl = req.file.originalname
     let slide;
-    let imageUrl 
+    let imageName = req.file.fieldname
+    let imageBuffer = req.file.buffer
+    let imageMimetype = req.file.mimetype
+    //Guardo la imagen en AWS - 
     try {
-        imageUrl = await DecodingImage.decoding(imageBase64);
-    } catch (error) {
-        res.status(500).json({
-            message: error.message,
-        });
-
-    };
-
+        json = await uploadFile(imageName, imageBuffer, imageUrl, imageMimetype);
+    } catch (err) {
+        return err.message;
+    }
+    //Creo la URL a guardar en BD
     try {
+        imageUrl = `https://${AWS_BUCKET_NAME}.s3.${AWS_BUCKET_REGION}.amazonaws.com/${imageName}-${imageUrl}`
+
+        //Si no obtengo orden, genero uno en base al útlimo + 1
+
+        if (!order) {
+            listSlide = await Slides.findAll({
+                order: [["order", "DESC"]],
+                attributes: ["order"]
+            });
+            console.log(JSON.stringify(listSlide[1].order + 1))
+            order = JSON.stringify(listSlide[1].order + 1)
+        } 
+        
         slide = await Slides.create({
+            order,
             imageUrl,
-            text,
-            order
+            text
         });
         res.json(slide)
+
+        // Guardo en DataBase
+
     } catch (error) {
         res.status(500).json({
             message: error.message,
         });
-
     };
+}
 
-}
-const upload = async (req, res) => {
-    if (req.file.filename) {
-        res.status(201).json({
-            mesaage: "Image upload successfully",
-            url: req.file.filename
-        });
-    } else {
-        res.status(500).json({
-            mesaage: "Something went wrong!"
-        });
-    }
-}
 
 
 module.exports = {
@@ -129,8 +138,7 @@ module.exports = {
     deleteByIdSlides,
     getSlideList,
     getSlideById,
-    creationSlide,
-    upload
+    creationSlide
 };
 
 

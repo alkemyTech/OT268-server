@@ -1,41 +1,39 @@
-const AWS = require('aws-sdk');
+require('dotenv').config()
+const { S3Client, PutObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3')
+const fs = require('fs')
+const { fileFilter } = require('../../../../helpers/imageUploader')
+const uuid = require('uuid').v4
 
-const {
-  AWS_S3_BUCKET_REGION,
-  AWS_ACCESS_KEY_ID,
-  AWS_SECRET_ACCESS_KEY,
-  AWS_S3_BUCKET_NAME,
-} = process.env;
+const AWS_PUBLIC_KEY=process.env.AWS_PUBLIC_KEY
+const AWS_SECRET_KEY=process.env.AWS_SECRET_KEY
+const AWS_BUCKET_NAME=process.env.AWS_BUCKET_NAME
+const AWS_BUCKET_REGION=process.env.AWS_BUCKET_REGION
 
-class FileStorage {
-  #clientConfig = {
-    accessKey: AWS_ACCESS_KEY_ID,
-    secretKey: AWS_SECRET_ACCESS_KEY,
-    region: AWS_S3_BUCKET_REGION,
-  };
 
-  #bucketName = AWS_S3_BUCKET_NAME;
-
-  constructor() {
-    this.client = new AWS.S3(this.#clientConfig);
-  }
-
-  async uploadImage(file, name, bucket = this.#bucketName) {
-    try {
-      const params = {
-        Bucket: bucket,
-        Key: name,
-        Body: file,
-      };
-
-      const uploadedImage = await this.client.upload(params).promise();
-
-      return uploadedImage.Location;
-    } catch (error) {
-      console.log(error);
-      return {err: error};
+const client = new S3Client({ region: AWS_BUCKET_REGION,
+    credentials: {
+        accessKeyId: AWS_PUBLIC_KEY,
+        secretAccessKey: AWS_SECRET_KEY,
     }
-  }
+})
+
+async function uploadFile(imageName,imageBuffer,imageUrl,imageMimetype){
+
+    
+
+    const uploadParams = {
+        Bucket: AWS_BUCKET_NAME,
+        Key: `${imageName}-${imageUrl}`,
+        Body: imageBuffer,
+        ACL: 'public-read',
+        ContentType: imageMimetype
+
+    }
+    const command = new PutObjectCommand(uploadParams)
+    return await client.send(command)   
 }
 
-module.exports = new FileStorage();
+
+module.exports = {
+    uploadFile
+}
