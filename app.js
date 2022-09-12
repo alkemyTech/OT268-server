@@ -16,6 +16,7 @@ const authRouter = require('./routes/auth');
 const categoryRouter = require('./routes/category');
 const newRouter = require("./routes/news")
 const contacts = require("./routes/contacts")
+const comment = require("./routes/comment")
 
 
 const app = express();
@@ -43,6 +44,7 @@ app.use("/news", newRouter);
 
 app.use('/activities', activitiesRouter);
 app.use('/contacts', contacts);
+app.use('/comment', comment);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
