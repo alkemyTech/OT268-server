@@ -8,3 +8,5 @@ const CommentsController = require('../controllers/comments.controller');
 /* GET users listing. */
 
 router.get('/', checkRol, CommentsController.getAllComments);
+
+router.get('/post/:id/comments', checkRol, CommentsController.getCommentsByPostId);
