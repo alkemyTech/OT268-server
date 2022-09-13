@@ -1,4 +1,5 @@
 const {Testimonials} = require ('../models/testimonials.js');
+const {validationResult} = require('express-validator');
 
 const getTestimonialsById = async (req, res) => {
 
@@ -54,10 +55,18 @@ const updateTestimonial = async(req, res) => {
 
 const createTestimonials = async (req, res) =>{
 
-    const {newValues} = req.body
-    const created = await Testimonials.create({...newValues}).catch(err => console.log(err))
-    if(!created) return res.status(400).json({ok: false})
-    return res.status(200).send(created)
+    const Testimonial = {};
+    Testimonial.name = req.body.name;
+    Testimonial.content = req.body.content;
+    Testimonial.image= req.body.image;
+    
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
+    const res = await Testimonials.create({...Testimonial}).catch(err => console.log(err))
+    if(!res) return res.status(400).json({ok: false})
+    return res.status(200).send(res)
 }
 
 module.exports = {

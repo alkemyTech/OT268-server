@@ -12,6 +12,7 @@ const {
 
 
 router.put('/:id',checkRol, updateTestimonial );
-router.put('/:id',checkRol, deleteTestimonial );
+router.delete('/:id',checkRol, deleteTestimonial );
+router.post('/:id',checkRol, createTestimonials );
 
 module.exports = router;
