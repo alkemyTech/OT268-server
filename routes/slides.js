@@ -2,11 +2,17 @@ const express = require('express');
 const router = express.Router();
 const {checkRol} = require('../middlewares/checkRol/checkRol');
 const SlidesController = require('../controllers/slides.controller')
+const imageUploader = require('../helpers/imageUploader');
+const multer  = require('multer');
+const upload = multer();
+
+
 const {
   getSlideById,
-    getSlideList
+  getSlideList,
+  creationSlide
 } = require('../controllers/slides.controller');
-
+   
 //UPDATE
   router.put("/:id", checkRol, SlidesController.updateSlides);
 
@@ -21,5 +27,8 @@ router.get('/',checkRol, getSlideList);
 
 // Obtener detalles mediante get ID
 router.get('/:id', getSlideById);
+
+// Crear Slide
+router.post('/',upload.single('imageUrl'),creationSlide);
 
 module.exports = router;

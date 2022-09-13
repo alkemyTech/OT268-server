@@ -8,7 +8,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Slide.belongsTo(models.Organizations, { as: 'organization' });
+
+      //Slide.belongsTo(models.Organization, { as: 'organization' });
+
     }
   }
   Slide.init(
