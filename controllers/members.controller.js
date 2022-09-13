@@ -1,5 +1,6 @@
 const models = require('../models');
 const { Members } = models
+const {API_URL} = process.env // por ahora no existe
 async function getMemberById(req, res) {
 
     const {id} = req.params 
@@ -10,9 +11,22 @@ async function getMemberById(req, res) {
 
 async function getAllMembers(req, res) { 
     
-    const members = await Members.findAll({}).catch(err => {return res.status(500).send(err)})
+    const {page} = req.query
+    if(page){
+        if(!Number.isInteger(page)) return res.status(400).json({status: 400, ok: false, error: "page parameter has to be an integer"})
+        const numberOfMembers = await Members.count().catch(err => {return res.status(500).send(err)})
+        let numberOfPages = numberOfMembers / 10
+        if(page > numberOfMembers || page < 1) return res.status(400).json({status: 400, ok: false, error: `invalid parameter (it should be an integer between 1 and ${numberOfPages})`})
+    }
+    const members = await Members.findAll({limit: 10, offset: page? page*10 : 0}).catch(err => {return res.status(500).send(err)})
     if(!members.length) return res.status(404).json( { status: 404, ok: false})
-    return res.status(200).json({ members})
+    const responseObject = {
+        ...members,
+        page: page || 1,
+        previousPage: page > 1 ? `${API_URL}/members?page=${page-1}` : null,
+        nextPage: page < numberOfPages ? `${API_URL}/members?page=${page+1}` : null
+    }
+    return res.status(200).json({responseObject})
 }
 
 async function deleteMember(req, res) {
