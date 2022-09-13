@@ -48,6 +48,7 @@ app.use('/auth', authRouter);
 app.use("/news", newRouter);
 
 app.use('/activities', activitiesRouter);
+app.use('/comment', comment);
 app.use('/contacts', contacts);
 app.use('/slides', slidesRouter);
 
