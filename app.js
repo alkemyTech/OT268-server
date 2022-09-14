@@ -4,6 +4,24 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsDoc = require("swagger-jsdoc")
+const swaggerDocument = require('./swagger/categories.swaggeres.json');
+const swaggerSpec = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Ong Somos Mas(Categories ednpoints)",
+      version: "1.0.0"
+    },
+    servers: [
+      {
+        url: "http://localhost:3001"
+      }
+    ]
+  },
+  apis: [`${path.join(__dirname,'./swagger/categories.swagger' )}`]
+}
 
 require('dotenv').config();
 
@@ -55,6 +73,12 @@ app.use('/comment', comment);
 app.use('/uploads', express.static('./uploads'))
 // images
 app.use(express.static('images'))
+
+
+app.use(
+  '/api/docs', 
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument));
 
 
 // catch 404 and forward to error handler
