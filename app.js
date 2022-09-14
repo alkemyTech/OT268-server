@@ -19,7 +19,7 @@ const authRouter = require('./routes/auth');
 const categoryRouter = require('./routes/category');
 const newRouter = require("./routes/news")
 const contacts = require("./routes/contacts")
-const comment = require("./routes/comment")
+const comment = require("./routes/comments")
 
 const slidesRouter = require("./routes/slides")
 
