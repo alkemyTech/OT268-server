@@ -4,6 +4,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger/Comentarios-1.0.0-resolved.json');
 
 require('dotenv').config();
 
@@ -17,7 +19,7 @@ const authRouter = require('./routes/auth');
 const categoryRouter = require('./routes/category');
 const newRouter = require("./routes/news")
 const contacts = require("./routes/contacts")
-const comment = require("./routes/comment")
+const comment = require("./routes/comments")
 
 const slidesRouter = require("./routes/slides")
 
@@ -45,16 +47,16 @@ app.use('/organizations', organizationsRouter);
 app.use('/auth', authRouter);
 app.use("/news", newRouter);
 
-app.use("/slides", slidesRouter);
-
 app.use('/activities', activitiesRouter);
-app.use('/contacts', contacts);
 app.use('/comment', comment);
+app.use('/contacts', contacts);
+app.use('/slides', slidesRouter);
 
-//static Images Folder
-app.use('/uploads', express.static('./uploads'))
-// images
-app.use(express.static('images'))
+// Swagger config
+app.use(
+    '/api/docs', 
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerDocument));
 
 
 // catch 404 and forward to error handler
