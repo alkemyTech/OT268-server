@@ -10,8 +10,7 @@ const { check, validationResult } = require("express-validator");
 /* GET users listing. */
 
 router.get('/', checkRol, CommentsController.getAllComments);
-
-
+router.get('/post/:id/comments', checkRol, CommentsController.getCommentsByPostId);
 router.post(
     "/",
     [
