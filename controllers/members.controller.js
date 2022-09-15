@@ -56,9 +56,14 @@ async function restoreMember(req, res){
 
 async function updateMember(req, res){
 
-    const {id, newValues} = req.body
-    const updated = await Members.update({...newValues}, {where: {id: id}}).catch(err => console.log(err))
-    if(!updated) return res.status(400).json({ok: false})
+    const {id} = req.params
+    const {newValues} = req.body
+    if(!id || !newValues) return res.status(400).json({status: 400, ok: false, error: "missing data. Check documentation"})
+    const member = await Members.findByPk(id).catch(err => {return res.status(500).send(err)})
+    if(!member) return res.status(404).json({status: 404, ok: false, error: "user not found. Check id"})
+    const updated = await member.update({...newValues}).catch(err => {return res.status(500).send(err)})
+    const saved = await member.save().catch(err => {return res.status(500).send(err)})
+    if(!updated || !saved) return res.status(400).json({status: 400, ok: false})
     return res.status(200).send(updated)
 }
 
