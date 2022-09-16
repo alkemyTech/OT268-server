@@ -12,10 +12,12 @@ async function getMemberById(req, res) {
 async function getAllMembers(req, res) { 
     
     const {page} = req.query
+    let numberOfMembers = 0;
+    let numberOfPages = 0;
     if(page){
         if(!Number.isInteger(page)) return res.status(400).json({status: 400, ok: false, error: "page parameter has to be an integer"})
-        const numberOfMembers = await Members.count().catch(err => {return res.status(500).send(err)})
-        let numberOfPages = numberOfMembers / 10
+        numberOfMembers = await Members.count().catch(err => {return res.status(500).send(err)})
+        numberOfPages = numberOfMembers / 10
         if(page > numberOfMembers || page < 1) return res.status(400).json({status: 400, ok: false, error: `invalid parameter (it should be an integer between 1 and ${numberOfPages})`})
     }
     const members = await Members.findAll({limit: 10, offset: page? page*10 : 0}).catch(err => {return res.status(500).send(err)})
