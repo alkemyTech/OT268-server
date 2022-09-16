@@ -36,28 +36,147 @@ membersForTesting.forEach(async e => {
             .get('/members')
             .end((err, res) => {
                   res.should.have.status(200);
-                  res.body.should.be.a('array');
+                  res.body.should.be.a('object');
               done();
             });
       });
-    it('it should GET an error when passed a wrong id', (done) =>{
+      it('it should not allow you to request a non integer page number', (done)=> {
         chai.request(server)
-        .get('/members/93843')
-        .end((err, res) =>{
-            res.should.have.status(404);
-            res.body.should.be.a('object');
+        .get('/members?page=NaN')
+        .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.have.property('error').eql("page parameter has to be an integer");
         done();
         });
-    it('it should GET one member when passed a valid id', (done) =>{
+      });
+      it('it should not allow you to request a page number higher than possible', (done)=> {
         chai.request(server)
-        .get('members/1')
-        .end((err, res) =>{
-            res.should.have.status(200);
-            res.body.should.be.a('object');
-            res.body.length.should.be.eql(1);
+        .get('/members?page=152616')
+        .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.have.property('ok').eql(false);
         done();
         });
-    })
-  });
+      });
 });
+
+describe('/POST member', () => {
+    it('it should not POST a member without name field', (done) => {
+        let member = {
+            name: null,
+            facebookUrl: 'https:facebook.com/testingThree',
+            instagramUrl: 'https:instagram.com/testingThree',
+            linkedinUrl: 'https:linkedin.com/in/testingThree',
+            image: 'https:image.com/testingThree',
+            description: 'testing threes description'
+        }
+          chai.request(server)
+          .post('/members')
+          .send({newMember: member})
+          .end((err, res) => {
+                res.should.have.status(400);
+            done();
+          });
+    });
+    it('it should POST a member ', (done) => {
+        let member = {
+            name: 'testing three',
+            facebookUrl: 'https:facebook.com/testingThree',
+            instagramUrl: 'https:instagram.com/testingThree',
+            linkedinUrl: 'https:linkedin.com/in/testingThree',
+            image: 'https:image.com/testingThree',
+            description: 'testing threes description'
+        }
+          chai.request(server)
+          .post('/members')
+          .send({newMember: member})
+          .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+                res.body.should.have.property('name');
+            done();
+          });
+    });
+});
+
+describe('/PUT/:id member', () => {
+    it('it should UPDATE a member given the id', async () => {
+        const member = await Members.create({name: "old name",
+            facebookUrl: 'https:facebook.com/testingThree',
+            instagramUrl: 'https:instagram.com/testingThree',
+            linkedinUrl: 'https:linkedin.com/in/testingThree',
+            image: 'https:image.com/testingThree',
+            description: 'testing threes description'})
+        chai.request(server)
+              .put('/members/' + member.id)
+              .send({newValues: {
+                name: 'new name',
+                facebookUrl: 'https:facebook.com/testingThree',
+                instagramUrl: 'https:instagram.com/testingThree',
+                linkedinUrl: 'https:linkedin.com/in/testingThree',
+                image: 'https:image.com/testingThree',
+                description: 'testing threes description'
+              }})
+              .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('name').eql('new name');
+                //done();
+              });
+        
+    });
+    it('should throw an error if not id is passed', (done) =>{
+        chai.request(server)
+                  .put('/members/NaN')
+                  .end((err, res) => {
+                        res.should.have.status(400);
+                        res.body.should.be.a('object');
+                        res.body.should.have.property('ok').eql(false);
+                        res.body.should.have.property('error').eql("missing data. Check documentation")
+                    done();
+                  });
+    })
+    it('should throw an error if no new data is passed', (done) =>{
+        chai.request(server)
+                  .put('/members/1')
+                  .end((err, res) => {
+                        res.should.have.status(400);
+                        res.body.should.be.a('object');
+                        res.body.should.have.property('ok').eql(false);
+                        res.body.should.have.property('error').eql("missing data. Check documentation")
+                    done();
+                  });
+    })
+});
+    describe('/DELETE/:id member', () => {
+        it('it should DELETE a member given the id', async () => {
+            let member = await Members.create({
+                name: "old name",
+                facebookUrl: 'https:facebook.com/testingThree',
+                instagramUrl: 'https:instagram.com/testingThree',
+                linkedinUrl: 'https:linkedin.com/in/testingThree',
+                image: 'https:image.com/testingThree',
+                description: 'testing threes description'})
+            member.save((err, member) => {
+                  chai.request(server)
+                  .delete('/members/' + member.id)
+                  .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.should.be.a('object');
+                        res.body.should.have.property('ok').eql(true);
+                  });
+            });
+        });
+        it('it should throw an error when given an invalid id', (done)=> {
+            chai.request(server)
+            .delete('/members/NaN')
+            .end((err, res) => {
+                  res.should.have.status(400);
+              done();
+            });
+        })
+    });
+
+
+
 

@@ -15,20 +15,20 @@ async function getAllMembers(req, res) {
     let numberOfMembers = 0;
     let numberOfPages = 0;
     if(page){
-        if(!Number.isInteger(page)) return res.status(400).json({status: 400, ok: false, error: "page parameter has to be an integer"})
+        if(!Number.isInteger(parseInt(page))) return res.status(400).json({status: 400, ok: false, error: "page parameter has to be an integer"})
         numberOfMembers = await Members.count().catch(err => {return res.status(500).send(err)})
-        numberOfPages = numberOfMembers / 10
+        numberOfPages = Math.ceil(numberOfMembers / 10)
         if(page > numberOfMembers || page < 1) return res.status(400).json({status: 400, ok: false, error: `invalid parameter (it should be an integer between 1 and ${numberOfPages})`})
     }
-    const members = await Members.findAll({limit: 10, offset: page? page*10 : 0}).catch(err => {return res.status(500).send(err)})
+    const members = await Members.findAll({limit: 10, offset: page? (page -1)*10 : 0}).catch(err => {return res.status(500).send(err)})
     if(!members.length) return res.status(404).json( { status: 404, ok: false})
     const responseObject = {
         ...members,
         page: page || 1,
-        previousPage: page > 1 ? `${API_URL}/members?page=${page-1}` : null,
-        nextPage: page < numberOfPages ? `${API_URL}/members?page=${page+1}` : null
+        previousPage: page > 1 ? `${API_URL || 'localhost:3000'}/members?page=${parseInt(page)-1}` : null,
+        nextPage: page < numberOfPages ? `${API_URL || 'localhost:3000'}/members?page=${parseInt(page)+1}` : null
     }
-    return res.status(200).json({responseObject})
+    return res.status(200).json({...responseObject})
 }
 
 async function deleteMember(req, res) {
