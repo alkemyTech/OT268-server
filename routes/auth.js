@@ -14,7 +14,7 @@ router.post(
       .isLength({ min: 4 })
       .withMessage({ ok: false }),
   ],
-  logIn, 
+  logIn ,  
   newToken
 );
 router.get('/me', authJWT)
