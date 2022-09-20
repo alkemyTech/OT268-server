@@ -21,6 +21,7 @@ const comment = require("./routes/comment")
 
 const slidesRouter = require("./routes/slides")
 
+const swaggerDocument = require('./swagger/novedades_swagger.json');
 
 const app = express();
 app.use(cors());
@@ -55,6 +56,12 @@ app.use('/comment', comment);
 app.use('/uploads', express.static('./uploads'))
 // images
 app.use(express.static('images'))
+
+// Swagger config
+app.use(
+    '/api/docs', 
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerDocument));
 
 
 // catch 404 and forward to error handler
