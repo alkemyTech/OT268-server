@@ -5,9 +5,11 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
+
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerDocumentCategory = require('./swagger/categories.swaggeres.json');
 const swaggerDocumentComentario = require('./swagger/Comentarios-1.0.0-resolved.json');
+
 
 require('dotenv').config();
 
@@ -53,6 +55,7 @@ app.use('/contacts', contacts);
 app.use('/slides', slidesRouter);
 
 // Swagger config
+
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentCategory));
 
 app.use(
@@ -60,6 +63,7 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocumentComentario)
 );
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
