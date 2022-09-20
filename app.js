@@ -4,6 +4,10 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerDocumentCategory = require('./swagger/categories.swaggeres.json');
+const swaggerDocumentComentario = require('./swagger/Comentarios-1.0.0-resolved.json');
 
 require('dotenv').config();
 
@@ -15,13 +19,14 @@ const organizationsRouter = require('./routes/organizations');
 
 const authRouter = require('./routes/auth');
 const categoryRouter = require('./routes/category');
-const newRouter = require("./routes/news")
-const contacts = require("./routes/contacts")
-const comment = require("./routes/comment")
-
-const slidesRouter = require("./routes/slides")
+const newRouter = require('./routes/news');
+const contacts = require('./routes/contacts');
+const comment = require('./routes/comments');
 
 const swaggerDocument = require('./swagger/novedades_swagger.json');
+
+const slidesRouter = require('./routes/slides');
+
 
 const app = express();
 app.use(cors());
@@ -41,27 +46,31 @@ app.use('/users', usersRouter);
 
 app.use('/category', categoryRouter);
 
-
 app.use('/organizations', organizationsRouter);
 app.use('/auth', authRouter);
-app.use("/news", newRouter);
-
-app.use("/slides", slidesRouter);
+app.use('/news', newRouter);
 
 app.use('/activities', activitiesRouter);
-app.use('/contacts', contacts);
 app.use('/comment', comment);
+app.use('/contacts', contacts);
+app.use('/slides', slidesRouter);
 
-//static Images Folder
-app.use('/uploads', express.static('./uploads'))
-// images
-app.use(express.static('images'))
+// Swagger config
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentCategory));
+
 
 // Swagger config
 app.use(
     '/api/docs', 
     swaggerUi.serve,
     swaggerUi.setup(swaggerDocument));
+
+
+app.use(
+  '/api/docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocumentComentario)
+);
 
 
 // catch 404 and forward to error handler
@@ -80,6 +89,5 @@ app.use(function (err, req, res, next) {
     .status(err.status || 500)
     .json({ message: res.locals.message, statusCode: err.status });
 });
-
 
 module.exports = app;
