@@ -1,8 +1,15 @@
 const express = require('express');
-const { getAllMembers, createMember, deleteMember } = require('../controllers/members.controller');
+const {
+  getAllMembers,
+  createMember,
+  deleteMember,
+  updateMember,
+} = require('../controllers/members.controller');
+const { checkRol } = require('../middlewares/checkRol/checkRol');
 const router = express.Router();
 
 router.get('/', getAllMembers);
-router.post('/', createMember)
-router.delete('/:id', deleteMember)
+router.post('/', checkRol, createMember);
+router.delete('/:id', checkRol, deleteMember);
+router.put('/:id', checkRol, updateMember);
 module.exports = router;

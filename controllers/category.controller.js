@@ -6,11 +6,23 @@ const {validationResult} = require('express-validator');
 const Category = require('../models/category')(db.sequelize, db.Sequelize.DataTypes);
 
 const getAllCategory =  async (req,res) =>{
-    Category.findAll({attributes: ["name"]}).then(response =>   
-         res.status(200).send(response)
-         ).catch(err => {
+    
+    const {page} = req.query;
+    if(page){
+     
+        Category.findAll({limit: 10, offset: (page - 1) * 10}).then(response => {
+            res.status(200).send({categories: response, nextPage: parseInt(page) + 1, prevPage: parseInt(page) > 1 ? parseInt(page) - 1: ''});
+        }).catch(err => {
             res.status(500).send(err);
         });
+    }else{
+        Category.findAll({attributes: ["name"]}).then(response =>   
+            res.status(200).send(response)
+            ).catch(err => {
+                res.status(500).send(err);
+            });
+    }
+    
 }
 
 const createCategory = (req, res) => {
@@ -66,7 +78,6 @@ const deleteByIdCategory =  (req,res) =>{
     })
  
 }
-
 
 module.exports = {
     getAllCategory,

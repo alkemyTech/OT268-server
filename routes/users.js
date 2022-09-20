@@ -3,28 +3,27 @@ const router = express.Router();
 const { adminAuthentication } = require('../middlewares/adminAuth/userAdmin');
 
 const { register } = require('../controllers/register.controller');
-const { check, validationResult } = require("express-validator");
+const { check, validationResult } = require('express-validator');
 const {
   deleteUserByIdController,
   listUsersController,
-  updateUserController
+  updateUserController,
 } = require('../controllers/user');
+
+const { checkRol } = require('../middlewares/checkRol/checkRol');
 
 /* GET users listing. */
 
-router.get('/', function (req, res, next) {
-  res.send('respond with a resource');
-});
+router.get('/', checkRol, listUsersController);
 
-router.delete('/:id', deleteUserByIdController);
-router.patch('/:id', updateUserController);
+router.delete('/:id', checkRol, deleteUserByIdController);
+router.patch('/:id', checkRol, updateUserController);
 router.post(
-  "/",
+  '/',
+  checkRol,
   [
-    check("email").isEmail().notEmpty(),
-    check('password')
-      .notEmpty()
-      .isLength({ min: 4 })
+    check('email').isEmail().notEmpty(),
+    check('password').notEmpty().isLength({ min: 4 }),
   ],
   (req, res, next) => {
     const errors = validationResult(req);
@@ -36,6 +35,5 @@ router.post(
   },
   register
 );
-
 
 module.exports = router;
