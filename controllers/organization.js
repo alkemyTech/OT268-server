@@ -1,13 +1,13 @@
 const models = require('../models');
-const { Organization } = models
+const { Organizations } = models
 
 //GET ALL *
 async function getOrganization (req,res){
   let Organization = {};
 
   try {
-      news = await Organization.findAll();
-      res.json(Organization)
+    const  news = await Organizations.findAll();
+      res.json(news)
   } catch (error) {
       res.status(500).json({
           message: error.message,
@@ -20,19 +20,32 @@ async function getOrganization (req,res){
 
 async function createOrganization(req, res){
 
-  const {newValues} = req.body
-  const created = await Organization.create({...newValues}).catch(err => console.log(err))
+  try {
+    const {name, image, address, phone, mail, welcomeText, aboutUsText} = req.body
+    
+  const created = await Organizations.create({
+    name,
+    image,
+    address,
+    phone,
+    mail,
+    welcomeText,
+    aboutUsText
+  })
 
   if(!created) return res.status(400).json({ok: false})
 
   return res.status(200).send(created)
+  } catch (error) {
+    return res.status(400).send(error)
+  }
 }
 
 // UPDATE ORGANIZATION
 async function updateOrganization (req, res){
 
   const {id, newValues} = req.body
-  const updated = await Organization.update({...newValues}, {where: {id: id}}).catch(err => console.log(err))
+  const updated = await Organizations.update({...newValues}, {where: {id: id}}).catch(err => console.log(err))
   if(!updated) return res.status(400).json({ok: false})
   return res.status(200).send(updated)
 }

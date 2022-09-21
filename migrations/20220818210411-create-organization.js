@@ -43,7 +43,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT,
       },
-      welcomeText: {
+      aboutUsText: {
         type: Sequelize.TEXT,
       },
       deletedAt: {
@@ -60,6 +60,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Organization');
+    await queryInterface.dropTable('Organizations');
   },
 };

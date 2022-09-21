@@ -9,9 +9,9 @@ const router = express.Router();
 
 /* GET organizations listing. */
 
-router.get('/public', checkRol, getOrganization);
-router.post('/pulic', checkRol, createOrganization);
-router.put('/pulic/:id', checkRol, updateOrganization);
-router.delete('/pulic/:id', checkRol, deleteOrganization);
+router.get('/', getOrganization);
+router.post('/public',  createOrganization);
+router.put('/public/:id', checkRol, updateOrganization);
+router.delete('/public/:id', checkRol, deleteOrganization);
 
 module.exports = router;
