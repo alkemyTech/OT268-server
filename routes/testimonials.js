@@ -15,7 +15,7 @@ router.get('/', getAllTestimonials );
 router.put('/:id',checkRol, updateTestimonial );
 router.delete('/:id',checkRol, deleteTestimonial );
 //router.post('/:id',checkRol, createTestimonials );
-router.post('/', createTestimonials );
+router.post('/',checkRol, createTestimonials );
 
 module.exports = router;
 //agregar checkRol al post y get luego de hacer paginacion y arreglar error de auth user
