@@ -4,6 +4,7 @@ const app = require("../app")
 const request = require("supertest")(app);
 
 
+
 let adminToken, regularToken = null;
 const baseRequest = { name: "News 1", content: "News content", image: "https://via.placeholder.com/600/92c952",categoryId: 1 }
 
