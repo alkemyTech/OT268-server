@@ -5,7 +5,10 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger/Comentarios-1.0.0-resolved.json');
+
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerDocumentCategory = require('./swagger/categories.swaggeres.json');
+const swaggerDocumentComentario = require('./swagger/Comentarios-1.0.0-resolved.json');
 
 require('dotenv').config();
 
@@ -17,11 +20,13 @@ const organizationsRouter = require('./routes/organizations');
 
 const authRouter = require('./routes/auth');
 const categoryRouter = require('./routes/category');
-const newRouter = require("./routes/news")
-const contacts = require("./routes/contacts")
-const comment = require("./routes/comments")
+const newRouter = require('./routes/news');
+const contacts = require('./routes/contacts');
+const comment = require('./routes/comments');
 
-const slidesRouter = require("./routes/slides")
+const swaggerDocument = require('./swagger/novedades_swagger.json');
+
+const slidesRouter = require('./routes/slides');
 
 
 const app = express();
@@ -42,10 +47,9 @@ app.use('/users', usersRouter);
 
 app.use('/category', categoryRouter);
 
-
 app.use('/organizations', organizationsRouter);
 app.use('/auth', authRouter);
-app.use("/news", newRouter);
+app.use('/news', newRouter);
 
 app.use('/activities', activitiesRouter);
 app.use('/comment', comment);
@@ -53,10 +57,22 @@ app.use('/contacts', contacts);
 app.use('/slides', slidesRouter);
 
 // Swagger config
+
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentCategory));
+
+
+// Swagger config
 app.use(
     '/api/docs', 
     swaggerUi.serve,
     swaggerUi.setup(swaggerDocument));
+
+
+app.use(
+  '/api/docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocumentComentario)
+);
 
 
 // catch 404 and forward to error handler
@@ -75,6 +91,5 @@ app.use(function (err, req, res, next) {
     .status(err.status || 500)
     .json({ message: res.locals.message, statusCode: err.status });
 });
-
 
 module.exports = app;

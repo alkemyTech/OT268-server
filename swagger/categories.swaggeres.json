@@ -1,0 +1,409 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Api Project ONG",
+    "description": "This is a simple API",
+    "contact": {
+      "email": "you@your-company.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001",
+      "description": "Desarrollo"
+    },
+    {
+      "url": "",
+      "description": "Producción"
+    }
+  ],
+  
+  "tags": [
+    {
+      "name": "categories",
+      "description": "Operations about categories."
+    }
+  ],
+  "paths": {
+    "/category/": {
+      "get": {
+        "security": [
+          {
+           " bearerAuth": []
+          }
+        ],
+        
+        "tags": ["category"],
+        "summary": "Return a list of existing categories",
+        "description": "# Service for retrieve comments by parameters with pagination\n - For the pagination, you need send offset and limit parameters.",
+        "responses": {
+          "200": {
+            "description": "A JSON Array of comments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Category"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error message in JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/ErrorDB"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+           " bearerAuth": []
+          }
+        ],
+        "tags": ["comments"],
+        "summary": "test authorization",
+        "description": "",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentCreateAndUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Comment created."
+          },
+          "400": {
+            "description": "Error message in JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/RequestError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error message in JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/ErrorDB"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/category/{id}": {
+      "get": {
+        "security": [
+          {
+           " bearerAuth": []
+          }
+        ],
+        "tags": ["category"],
+        "summary": "Return a list of categories providing an existing id.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the comment you want to see.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A JSON Array of categories.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Category"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error message in JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/RequestError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error message in JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/ErrorDB"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+           " bearerAuth": []
+          }
+        ],
+        "tags": ["category"],
+        "summary": "Update an existing category by providing the correct id.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the category that needs to be updated.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentCreateAndUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Category updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Comment"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error message in JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/RequestError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error message in JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/ErrorDB"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+           " bearerAuth": []
+          }
+        ],
+        "tags": ["category"],
+        "summary": "Delete an existing category by providing the correct id.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the category that needs to be deleted.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Category deleted."
+          },
+          "400": {
+            "description": "Error message in JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/RequestError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error message in JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/ErrorDB"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "apiKey",
+        "name": "token",
+        "scheme": "bearer",
+        "in": "header",
+        "bearerFormat": "JWT"
+  
+      }
+    
+      },
+    "schemas": {
+      "Category": {
+        "required": ["id"],
+        "type": "object",
+        "properties": {
+          "role": {
+            "description": "the user role",
+            "type": "string",
+            "example": "Default value: USER_ROLE"
+          },
+          "enable": {
+            "description": "User is enabled?",
+            "type": "boolean",
+            "example": "true"
+          },
+          "id": {
+            "description": "Category id.",
+            "type": "integer",
+            "example": "1"
+          },
+          "name": {
+            "description": "The category name.",
+            "type": "string",
+            "example": "Random"
+          },
+          "description": {
+            "description": "Category description.",
+            "type": "string",
+            "example": "Random"
+          },
+          "image": {
+            "description": "Category image.",
+            "type": "string",
+            "example": "jpg"
+          },
+          "createdAt": {
+            "description": "date of the user creation.",
+            "type": "date",
+            "example": "YY-MM-DD -> 1989-12-31"
+          },
+          "updatedAt": {
+            "description": "date of the user update.",
+            "type": "date",
+            "example": "YY-MM-DD -> 1989-12-31"
+          }
+        }
+      },
+      "CommentCreateAndUpdate": {
+        "required": ["id"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The category name.",
+            "type": "string",
+            "example": "Random example"
+          },
+          "description": {
+            "description": "Category description.",
+            "type": "string",
+            "example": "Random example"
+          },
+          "image": {
+            "description": "Category image.",
+            "type": "string",
+            "example": "jpg example"
+          }
+        }
+      },
+      "RequestError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Error code",
+            "type": "integer",
+            "example": "400"
+          },
+          "message": {
+            "description": "Error message",
+            "type": "string",
+            "example": "Validation Errors: Invalid id, invalid email, etc"
+          }
+        }
+      },
+      "ErrorDB": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Error code",
+            "type": "integer",
+            "example": "500"
+          },
+          "message": {
+            "description": "Error message",
+            "type": "string",
+            "example": "Search failed: description of the error"
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
