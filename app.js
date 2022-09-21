@@ -10,7 +10,6 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerDocumentCategory = require('./swagger/categories.swaggeres.json');
 const swaggerDocumentComentario = require('./swagger/Comentarios-1.0.0-resolved.json');
 
-
 require('dotenv').config();
 
 const indexRouter = require('./routes/index');
