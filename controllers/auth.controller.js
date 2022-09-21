@@ -29,6 +29,7 @@ const logIn = async (req, res, next) => {
 
       return res.status(200).json({ token });
     }
+    return res.status(404).json({ ok: false });
     
   } catch (error) {
     return res.status(404).json({ ok: false });

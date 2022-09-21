@@ -43,7 +43,7 @@ await User.findOrCreate({where: {
       it('it should return a 404 status code if a wrong password is sent', ()=> {
         chai.request(server)
         .post('/auth/login')
-        .send({email: 'foo@bar.com', password: '0000'})
+        .send({email: 'foo@bar.com', password: '00000'})
         .end((err, res) => {
             res.should.have.status(404);
             res.body.should.have.property('ok').eql(false);
@@ -53,11 +53,10 @@ await User.findOrCreate({where: {
     it('should return a valid JWT when valid credentials are sent', ()=> {
         chai.request(server)
         .post('/auth/login')
-        .send({email: 'foo@bar.com', password: '$2b$10$6RXTqTLQfPphCpQWoR1IXuUwEx9DgJHZks4jO1n1QvpDdkg8Oxzz6'}) // este bug no es mio y no sé cómo arreglarlo
-        .end((err, res) => {                                                                                    // pero deberia pasarle la contraseña no hasheada
+        .send({email: 'foo@bar.com', password: '1234'}) 
+        .end((err, res) => {                                                                                    
             res.should.have.status(200);
             res.body.should.be.a('object');
-            res.body.should.eql()
         //done();
         });
     })
