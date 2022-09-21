@@ -24,16 +24,16 @@ function authJWT(req, res){
     const token = req.header('Authorization')
 
 
-    if (!token) return res.status(403).end()
+    if (!token) return res.status(403).send('token not found').end()
     
     let payload
     try {
         payload = jwt.verify(token, jwtKey)
     } catch (e) {
-        if (e instanceof jwt.JsonWebTokenError) return res.status(401).end()
-        return res.status(400).end()
+        if (e instanceof jwt.JsonWebTokenError) return res.status(401).send('invalid token').end()
+        return res.status(400).send('something went wrong').end()
     }
-    res.send(`${payload.email} authorized`)
+    res.status(200).send(`${payload.email} authorized`)
 }
 
 module.exports = {
