@@ -67,6 +67,7 @@ const createTestimonials = async (req, res) =>{
     const result = await Testimonials.create({...Testimonial}).catch(err => console.log(err))
     if(!result) return res.status(400).json({ok: false})
     return res.status(200).send(result)
+
 }
 
 module.exports = {

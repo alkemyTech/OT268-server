@@ -14,7 +14,7 @@ router.post(
       .isLength({ min: 4 })
       .withMessage({ ok: false }),
   ],
-  logIn
+  logIn, 
 );
 router.get('/me', authJWT)
 module.exports = router;

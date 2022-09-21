@@ -22,59 +22,23 @@
       "description": "Producción"
     }
   ],
-  
   "tags": [
     {
-      "name": "categories",
-      "description": "Operations about categories."
+      "name": "testimonials",
+      "description": "Operations about testimonials."
     }
   ],
   "paths": {
-    "/category/": {
-      "get": {
-        "security": [
-          {
-           " bearerAuth": []
-          }
-        ],
-        
-        "tags": ["category"],
-        "summary": "Return a list of existing categories",
-        "description": "# Service for retrieve comments by parameters with pagination\n - For the pagination, you need send offset and limit parameters.",
-        "responses": {
-          "200": {
-            "description": "A JSON Array of comments.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Category"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Error message in JSON",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "$ref": "#/components/schemas/ErrorDB"
-                }
-              }
-            }
-          }
-        }
-      },
+    "/testimonials/": {
       "post": {
         "security": [
           {
-           " bearerAuth": []
+            " bearerAuth": []
           }
         ],
-        "tags": ["comments"],
+        "tags": [
+          "testimonials"
+        ],
         "summary": "test authorization",
         "description": "",
         "requestBody": {
@@ -82,14 +46,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CommentCreateAndUpdate"
+                "$ref": "#/components/schemas/TestimonialCreateAndUpdate"
               }
             }
           }
         },
         "responses": {
-          "201": {
-            "description": "Comment created."
+          "200": {
+            "description": "Testimonial created."
           },
           "400": {
             "description": "Error message in JSON",
@@ -116,79 +80,23 @@
         }
       }
     },
-    "/category/{id}": {
-      "get": {
-        "security": [
-          {
-           " bearerAuth": []
-          }
-        ],
-        "tags": ["category"],
-        "summary": "Return a list of categories providing an existing id.",
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The id of the comment you want to see.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A JSON Array of categories.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Category"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Error message in JSON",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "$ref": "#/components/schemas/RequestError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Error message in JSON",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "$ref": "#/components/schemas/ErrorDB"
-                }
-              }
-            }
-          }
-        }
-      },
+    "/testimonial/{id}": {
       "put": {
         "security": [
           {
-           " bearerAuth": []
+            " bearerAuth": []
           }
         ],
-        "tags": ["category"],
-        "summary": "Update an existing category by providing the correct id.",
+        "tags": [
+          "category"
+        ],
+        "summary": "Update an existing testimonial by providing the correct id.",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "The id of the category that needs to be updated.",
+            "description": "The id of the testimonial that needs to be updated.",
             "required": true,
             "schema": {
               "type": "string"
@@ -199,19 +107,19 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CommentCreateAndUpdate"
+                "$ref": "#/components/schemas/TestimonialCreateAndUpdate"
               }
             }
           }
         },
         "responses": {
-          "201": {
-            "description": "Category updated",
+          "200": {
+            "description": "Testimonial updated",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "$ref": "#/components/schemas/Comment"
+                  "$ref": "#/components/schemas/Testimonial"
                 }
               }
             }
@@ -243,17 +151,19 @@
       "delete": {
         "security": [
           {
-           " bearerAuth": []
+            " bearerAuth": []
           }
         ],
-        "tags": ["category"],
-        "summary": "Delete an existing category by providing the correct id.",
+        "tags": [
+          "category"
+        ],
+        "summary": "Delete an existing testimonial by providing the correct id.",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "The id of the category that needs to be deleted.",
+            "description": "The id of the testimonial that needs to be deleted.",
             "required": true,
             "schema": {
               "type": "string"
@@ -262,7 +172,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Category deleted."
+            "description": "Testimonial deleted."
           },
           "400": {
             "description": "Error message in JSON",
@@ -291,7 +201,6 @@
     }
   },
   "components": {
-    
     "securitySchemes": {
       "bearerAuth": {
         "type": "apiKey",
@@ -299,37 +208,27 @@
         "scheme": "bearer",
         "in": "header",
         "bearerFormat": "JWT"
-  
       }
-    
-      },
+    },
     "schemas": {
-      "Category": {
-        "required": ["id"],
+      "Testimonial": {
+        "required": [
+          "id"
+        ],
         "type": "object",
         "properties": {
-          "role": {
-            "description": "the user role",
+          "name": {
+            "description": "testimonial name",
             "type": "string",
-            "example": "Default value: USER_ROLE"
-          },
-          "enable": {
-            "description": "User is enabled?",
-            "type": "boolean",
-            "example": "true"
+            "example": "Random"
           },
           "id": {
             "description": "Category id.",
             "type": "integer",
             "example": "1"
           },
-          "name": {
-            "description": "The category name.",
-            "type": "string",
-            "example": "Random"
-          },
           "description": {
-            "description": "Category description.",
+            "description": "Testimonial content.",
             "type": "string",
             "example": "Random"
           },
@@ -338,34 +237,31 @@
             "type": "string",
             "example": "jpg"
           },
-          "createdAt": {
-            "description": "date of the user creation.",
-            "type": "date",
-            "example": "YY-MM-DD -> 1989-12-31"
-          },
-          "updatedAt": {
-            "description": "date of the user update.",
+          "deletedAt": {
+            "description": "date of the delete.",
             "type": "date",
             "example": "YY-MM-DD -> 1989-12-31"
           }
         }
       },
-      "CommentCreateAndUpdate": {
-        "required": ["id"],
+      "TestimonialCreateAndUpdate": {
+        "required": [
+          "id"
+        ],
         "type": "object",
         "properties": {
           "name": {
-            "description": "The category name.",
+            "description": "The testimonial name.",
             "type": "string",
             "example": "Random example"
           },
-          "description": {
-            "description": "Category description.",
+          "content": {
+            "description": "Testimonial description.",
             "type": "string",
             "example": "Random example"
           },
           "image": {
-            "description": "Category image.",
+            "description": "Testimonial image.",
             "type": "string",
             "example": "jpg example"
           }
@@ -382,7 +278,7 @@
           "message": {
             "description": "Error message",
             "type": "string",
-            "example": "Validation Errors: Invalid id, invalid email, etc"
+            "example": "Validation Errors: Invalid id, invalid image, etc"
           }
         }
       },
@@ -404,6 +300,3 @@
     }
   }
 }
-
-
-
