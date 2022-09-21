@@ -14,7 +14,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3002" ,
+      "url": "http://localhost:3001",
       "description": "Desarrollo"
     },
     {
@@ -22,59 +22,23 @@
       "description": "Producción"
     }
   ],
-  "basePath": "/",
   "tags": [
     {
-      "name": "news",
-      "description": "Operations about news."
+      "name": "testimonials",
+      "description": "Operations about testimonials."
     }
   ],
   "paths": {
-    "/news/": {
-      "get": {
-        "security": [
-          {
-           "bearerAuth": [{"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJlbWFpbCI6InRlc3QyQHRlc3QuY29tIiwidXNlcl9yb2xlSWQiOjEsImlhdCI6MTY2Mzc5NjAwMSwiZXhwIjoxNjY0MDM2MDAxfQ.JTp72XWqOZ-UmA7znD7kz9Lomip3qedqbOh6CckKASA"}]
-          }
-        ],
-        
-        "tags": ["news"],
-        "summary": "Return a list of existing news",
-        "description": "# Service for retrieve comments by parameters with pagination\n - For the pagination, you need send offset and limit parameters.",
-        "responses": {
-          "200": {
-            "description": "A JSON Array of comments.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/News"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Error message in JSON",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "$ref": "#/components/schemas/ErrorDB"
-                }
-              }
-            }
-          }
-        }
-      },
+    "/testimonials/": {
       "post": {
         "security": [
           {
-           " bearerAuth": []
+            " bearerAuth": []
           }
         ],
-        "tags": ["comments"],
+        "tags": [
+          "testimonials"
+        ],
         "summary": "test authorization",
         "description": "",
         "requestBody": {
@@ -82,14 +46,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CommentCreateAndUpdate"
+                "$ref": "#/components/schemas/TestimonialCreateAndUpdate"
               }
             }
           }
         },
         "responses": {
-          "201": {
-            "description": "Comment created."
+          "200": {
+            "description": "Testimonial created."
           },
           "400": {
             "description": "Error message in JSON",
@@ -116,79 +80,23 @@
         }
       }
     },
-    "/news/{id}": {
-      "get": {
-        "security": [
-          {
-           " bearerAuth": []
-          }
-        ],
-        "tags": ["news"],
-        "summary": "Return a list of news providing an existing id.",
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The id of the comment you want to see.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A JSON Array of news.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/News"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Error message in JSON",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "$ref": "#/components/schemas/RequestError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Error message in JSON",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "$ref": "#/components/schemas/ErrorDB"
-                }
-              }
-            }
-          }
-        }
-      },
+    "/testimonial/{id}": {
       "put": {
         "security": [
           {
-           " bearerAuth": []
+            " bearerAuth": []
           }
         ],
-        "tags": ["news"],
-        "summary": "Update an existing news by providing the correct id.",
+        "tags": [
+          "category"
+        ],
+        "summary": "Update an existing testimonial by providing the correct id.",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "The id of the news that needs to be updated.",
+            "description": "The id of the testimonial that needs to be updated.",
             "required": true,
             "schema": {
               "type": "string"
@@ -199,19 +107,19 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CommentCreateAndUpdate"
+                "$ref": "#/components/schemas/TestimonialCreateAndUpdate"
               }
             }
           }
         },
         "responses": {
-          "201": {
-            "description": "News updated",
+          "200": {
+            "description": "Testimonial updated",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "$ref": "#/components/schemas/Comment"
+                  "$ref": "#/components/schemas/Testimonial"
                 }
               }
             }
@@ -243,17 +151,19 @@
       "delete": {
         "security": [
           {
-           " bearerAuth": []
+            " bearerAuth": []
           }
         ],
-        "tags": ["news"],
-        "summary": "Delete an existing news by providing the correct id.",
+        "tags": [
+          "category"
+        ],
+        "summary": "Delete an existing testimonial by providing the correct id.",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "The id of the news that needs to be deleted.",
+            "description": "The id of the testimonial that needs to be deleted.",
             "required": true,
             "schema": {
               "type": "string"
@@ -262,7 +172,7 @@
         ],
         "responses": {
           "200": {
-            "description": "News deleted."
+            "description": "Testimonial deleted."
           },
           "400": {
             "description": "Error message in JSON",
@@ -291,7 +201,6 @@
     }
   },
   "components": {
-    
     "securitySchemes": {
       "bearerAuth": {
         "type": "apiKey",
@@ -299,85 +208,62 @@
         "scheme": "bearer",
         "in": "header",
         "bearerFormat": "JWT"
-  
       }
-    
-      },
+    },
     "schemas": {
-      "News": {
-        "required": ["id"],
+      "Testimonial": {
+        "required": [
+          "id"
+        ],
         "type": "object",
         "properties": {
-          "role": {
-            "description": "the user role",
-            "type": "string",
-            "example": "Default value: USER_ROLE"
-          },
-          "enable": {
-            "description": "User is enabled?",
-            "type": "boolean",
-            "example": "true"
-          },
-          "id": {
-            "description": "News id.",
-            "type": "integer",
-            "example": "1"
-          },
           "name": {
-            "description": "The news name.",
+            "description": "testimonial name",
             "type": "string",
             "example": "Random"
           },
-          "content": {
-            "description": "News description.",
+          "id": {
+            "description": "Category id.",
+            "type": "integer",
+            "example": "1"
+          },
+          "description": {
+            "description": "Testimonial content.",
             "type": "string",
             "example": "Random"
           },
           "image": {
-            "description": "News image.",
+            "description": "Category image.",
             "type": "string",
             "example": "jpg"
           },
-          "categoryId": {
-            "description": "News id.",
-            "type": "integer",
-            "example": "1"
-          },
-          "createdAt": {
-            "description": "date of the user creation.",
-            "type": "date",
-            "example": "YY-MM-DD -> 1989-12-31"
-          },
-          "updatedAt": {
-            "description": "date of the user update.",
+          "deletedAt": {
+            "description": "date of the delete.",
             "type": "date",
             "example": "YY-MM-DD -> 1989-12-31"
           }
         }
       },
-      "CommentCreateAndUpdate": {
-        "required": ["id"],
+      "TestimonialCreateAndUpdate": {
+        "required": [
+          "id"
+        ],
         "type": "object",
         "properties": {
           "name": {
-            "description": "The news name.",
+            "description": "The testimonial name.",
             "type": "string",
             "example": "Random example"
           },
           "content": {
-            "description": "News description.",
+            "description": "Testimonial description.",
             "type": "string",
             "example": "Random example"
           },
           "image": {
-            "description": "News image.",
+            "description": "Testimonial image.",
             "type": "string",
             "example": "jpg example"
-          },
-          "categoryId": {
-            "description": "News news.",
-            "type": "object",
-            "example": "Random example"
           }
         }
       },
@@ -392,7 +278,7 @@
           "message": {
             "description": "Error message",
             "type": "string",
-            "example": "Validation Errors: Invalid id, invalid email, etc"
+            "example": "Validation Errors: Invalid id, invalid image, etc"
           }
         }
       },

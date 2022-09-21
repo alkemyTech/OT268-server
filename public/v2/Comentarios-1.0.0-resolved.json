@@ -14,7 +14,11 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3002" ,
+      "url": "https://virtserver.swaggerhub.com/JULIANMOREYRA192/Comentarios/1.0.0",
+      "description": "SwaggerHub API Auto Mocking"
+    },    
+    {
+      "url": "http://localhost:3001",
       "description": "Desarrollo"
     },
     {
@@ -22,24 +26,64 @@
       "description": "Producción"
     }
   ],
-  "basePath": "/",
   "tags": [
     {
-      "name": "news",
-      "description": "Operations about news."
+      "name": "comments",
+      "description": "Operations about comments."
     }
   ],
   "paths": {
-    "/news/": {
+    "/comments/": {
       "get": {
-        "security": [
+        "parameters": [
           {
-           "bearerAuth": [{"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJlbWFpbCI6InRlc3QyQHRlc3QuY29tIiwidXNlcl9yb2xlSWQiOjEsImlhdCI6MTY2Mzc5NjAwMSwiZXhwIjoxNjY0MDM2MDAxfQ.JTp72XWqOZ-UmA7znD7kz9Lomip3qedqbOh6CckKASA"}]
+            "in": "query",
+            "name": "filter[name]",
+            "description": "filter comments by name.",
+            "required": false,
+            "Schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filter[lastName]",
+            "description": "filter comments by last name.",
+            "required": false,
+            "Schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filter[birthdate]",
+            "description": "filter comments by birthdate.",
+            "required": false,
+            "Schema": {
+              "type": "date"
+            }
+          },
+          {
+            "in": "query",
+            "name": "options[limit]",
+            "description": "The limit of comments displayed (Use it for pagination).",
+            "required": false,
+            "Schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "options[offset]",
+            "description": "index to start the search of comments (Use it for pagination).",
+            "required": false,
+            "Schema": {
+              "type": "string"
+            }
           }
         ],
-        
-        "tags": ["news"],
-        "summary": "Return a list of existing news",
+        "tags": ["comments"],
+        "summary": "Return a list of existing comments",
         "description": "# Service for retrieve comments by parameters with pagination\n - For the pagination, you need send offset and limit parameters.",
         "responses": {
           "200": {
@@ -49,7 +93,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/News"
+                    "$ref": "#/components/schemas/User"
                   }
                 }
               }
@@ -69,16 +113,10 @@
         }
       },
       "post": {
-        "security": [
-          {
-           " bearerAuth": []
-          }
-        ],
         "tags": ["comments"],
-        "summary": "test authorization",
+        "summary": "Create a new comment.",
         "description": "",
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -116,15 +154,10 @@
         }
       }
     },
-    "/news/{id}": {
+    "/comments/{id}": {
       "get": {
-        "security": [
-          {
-           " bearerAuth": []
-          }
-        ],
-        "tags": ["news"],
-        "summary": "Return a list of news providing an existing id.",
+        "tags": ["comments"],
+        "summary": "Return a list of comments providing an existing id.",
         "description": "",
         "parameters": [
           {
@@ -139,13 +172,13 @@
         ],
         "responses": {
           "200": {
-            "description": "A JSON Array of news.",
+            "description": "A JSON Array of comments.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/News"
+                    "$ref": "#/components/schemas/Comment"
                   }
                 }
               }
@@ -176,19 +209,14 @@
         }
       },
       "put": {
-        "security": [
-          {
-           " bearerAuth": []
-          }
-        ],
-        "tags": ["news"],
-        "summary": "Update an existing news by providing the correct id.",
+        "tags": ["comments"],
+        "summary": "Update an existing user by providing the correct id.",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "The id of the news that needs to be updated.",
+            "description": "The id of the comment that needs to be updated.",
             "required": true,
             "schema": {
               "type": "string"
@@ -206,7 +234,7 @@
         },
         "responses": {
           "201": {
-            "description": "News updated",
+            "description": "Comment updated",
             "content": {
               "application/json": {
                 "schema": {
@@ -241,19 +269,14 @@
         }
       },
       "delete": {
-        "security": [
-          {
-           " bearerAuth": []
-          }
-        ],
-        "tags": ["news"],
-        "summary": "Delete an existing news by providing the correct id.",
+        "tags": ["comments"],
+        "summary": "Delete an existing comment by providing the correct id.",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "The id of the news that needs to be deleted.",
+            "description": "The id of the comment that needs to be deleted.",
             "required": true,
             "schema": {
               "type": "string"
@@ -262,7 +285,7 @@
         ],
         "responses": {
           "200": {
-            "description": "News deleted."
+            "description": "Comment deleted."
           },
           "400": {
             "description": "Error message in JSON",
@@ -291,20 +314,8 @@
     }
   },
   "components": {
-    
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "apiKey",
-        "name": "token",
-        "scheme": "bearer",
-        "in": "header",
-        "bearerFormat": "JWT"
-  
-      }
-    
-      },
     "schemas": {
-      "News": {
+      "Comment": {
         "required": ["id"],
         "type": "object",
         "properties": {
@@ -318,30 +329,35 @@
             "type": "boolean",
             "example": "true"
           },
-          "id": {
-            "description": "News id.",
-            "type": "integer",
-            "example": "1"
+          "_id": {
+            "description": "The user id.",
+            "type": "string",
+            "example": "25acd789def..."
           },
           "name": {
-            "description": "The news name.",
+            "description": "The user name.",
             "type": "string",
-            "example": "Random"
+            "example": "Gastón"
           },
-          "content": {
-            "description": "News description.",
+          "lastName": {
+            "description": "The user last name.",
             "type": "string",
-            "example": "Random"
+            "example": "Martinez"
           },
-          "image": {
-            "description": "News image.",
+          "email": {
+            "description": "The user email.",
             "type": "string",
-            "example": "jpg"
+            "example": "example@mail.com"
           },
-          "categoryId": {
-            "description": "News id.",
-            "type": "integer",
-            "example": "1"
+          "password": {
+            "description": "The user password.",
+            "type": "string",
+            "example": "$2b$10$om4Aa5l2.QdSip87EdJM"
+          },
+          "birthdate": {
+            "description": "The user birthdate.",
+            "type": "date",
+            "example": "YY-MM-DD -> 1989-12-31"
           },
           "createdAt": {
             "description": "date of the user creation.",
@@ -360,24 +376,29 @@
         "type": "object",
         "properties": {
           "name": {
-            "description": "The news name.",
+            "description": "The user name.",
             "type": "string",
-            "example": "Random example"
+            "example": "Gastón"
           },
-          "content": {
-            "description": "News description.",
+          "lastName": {
+            "description": "The user last name.",
             "type": "string",
-            "example": "Random example"
+            "example": "Martinez"
           },
-          "image": {
-            "description": "News image.",
+          "email": {
+            "description": "The user email.",
             "type": "string",
-            "example": "jpg example"
+            "example": "example@email.com"
           },
-          "categoryId": {
-            "description": "News news.",
-            "type": "object",
-            "example": "Random example"
+          "password": {
+            "description": "The user password.",
+            "type": "string",
+            "example": "Your password"
+          },
+          "birthdate": {
+            "description": "The user birthdate.",
+            "type": "date",
+            "example": "MM-DD-YYY -> 12/31/1989"
           }
         }
       },

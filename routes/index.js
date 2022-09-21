@@ -13,6 +13,9 @@ router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/public/v2', function (req, res, next) {
+  res.render('index', { title: 'Express' });
+});
 
 router.use('/organization', organizationRoutes);
 router.use('/news', newsRoutes);
