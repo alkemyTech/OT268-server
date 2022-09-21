@@ -9,7 +9,6 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerDocumentCategory = require('./swagger/categories.swaggeres.json');
 const swaggerDocumentComentario = require('./swagger/Comentarios-1.0.0-resolved.json');
 
-
 require('dotenv').config();
 
 const indexRouter = require('./routes/index');
@@ -24,7 +23,10 @@ const newRouter = require('./routes/news');
 const contacts = require('./routes/contacts');
 const comment = require('./routes/comments');
 
+const swaggerDocument = require('./swagger/novedades_swagger.json');
+
 const slidesRouter = require('./routes/slides');
+
 
 const app = express();
 app.use(cors());
@@ -56,6 +58,14 @@ app.use('/slides', slidesRouter);
 // Swagger config
 
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentCategory));
+
+
+// Swagger config
+app.use(
+    '/api/docs', 
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerDocument));
+
 
 app.use(
   '/api/docs',

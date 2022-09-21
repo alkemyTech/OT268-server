@@ -1,0 +1,302 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Api Project ONG",
+    "description": "This is a simple API",
+    "contact": {
+      "email": "you@your-company.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001",
+      "description": "Desarrollo"
+    },
+    {
+      "url": "",
+      "description": "Producción"
+    }
+  ],
+  "tags": [
+    {
+      "name": "testimonials",
+      "description": "Operations about testimonials."
+    }
+  ],
+  "paths": {
+    "/testimonials/": {
+      "post": {
+        "security": [
+          {
+            " bearerAuth": []
+          }
+        ],
+        "tags": [
+          "testimonials"
+        ],
+        "summary": "test authorization",
+        "description": "",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TestimonialCreateAndUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Testimonial created."
+          },
+          "400": {
+            "description": "Error message in JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/RequestError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error message in JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/ErrorDB"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/testimonial/{id}": {
+      "put": {
+        "security": [
+          {
+            " bearerAuth": []
+          }
+        ],
+        "tags": [
+          "category"
+        ],
+        "summary": "Update an existing testimonial by providing the correct id.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the testimonial that needs to be updated.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TestimonialCreateAndUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Testimonial updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Testimonial"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error message in JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/RequestError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error message in JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/ErrorDB"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            " bearerAuth": []
+          }
+        ],
+        "tags": [
+          "category"
+        ],
+        "summary": "Delete an existing testimonial by providing the correct id.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the testimonial that needs to be deleted.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Testimonial deleted."
+          },
+          "400": {
+            "description": "Error message in JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/RequestError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error message in JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/ErrorDB"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "apiKey",
+        "name": "token",
+        "scheme": "bearer",
+        "in": "header",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Testimonial": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "testimonial name",
+            "type": "string",
+            "example": "Random"
+          },
+          "id": {
+            "description": "Category id.",
+            "type": "integer",
+            "example": "1"
+          },
+          "description": {
+            "description": "Testimonial content.",
+            "type": "string",
+            "example": "Random"
+          },
+          "image": {
+            "description": "Category image.",
+            "type": "string",
+            "example": "jpg"
+          },
+          "deletedAt": {
+            "description": "date of the delete.",
+            "type": "date",
+            "example": "YY-MM-DD -> 1989-12-31"
+          }
+        }
+      },
+      "TestimonialCreateAndUpdate": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The testimonial name.",
+            "type": "string",
+            "example": "Random example"
+          },
+          "content": {
+            "description": "Testimonial description.",
+            "type": "string",
+            "example": "Random example"
+          },
+          "image": {
+            "description": "Testimonial image.",
+            "type": "string",
+            "example": "jpg example"
+          }
+        }
+      },
+      "RequestError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Error code",
+            "type": "integer",
+            "example": "400"
+          },
+          "message": {
+            "description": "Error message",
+            "type": "string",
+            "example": "Validation Errors: Invalid id, invalid image, etc"
+          }
+        }
+      },
+      "ErrorDB": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Error code",
+            "type": "integer",
+            "example": "500"
+          },
+          "message": {
+            "description": "Error message",
+            "type": "string",
+            "example": "Search failed: description of the error"
+          }
+        }
+      }
+    }
+  }
+}
