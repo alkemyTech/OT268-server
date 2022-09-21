@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "dev": "nodemon ./bin/www",
+    "test": "mocha test/news.test.js --timeout 20000 --exit"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.168.0",
@@ -31,11 +32,14 @@
     "nodemailer": "^6.7.8",
     "path": "^0.12.7",
     "sequelize": "^6.3.5",
+    "supertest": "^6.2.4",
     "swagger-jsdoc": "^6.2.5",
     "swagger-ui-express": "^4.5.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0",
     "nodemon": "^2.0.19",
     "sequelize-cli": "^6.2.0"
   }

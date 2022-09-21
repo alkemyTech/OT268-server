@@ -27,6 +27,6 @@ router.post(
   postContactInformation
 );
 
-router.get("/", checkRol, getContactInformation);
+router.get("/",  getContactInformation);
 
 module.exports = router;

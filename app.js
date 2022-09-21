@@ -5,10 +5,12 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
-const swaggerJsDoc = require("swagger-jsdoc")
+//const swaggerJsDoc = require("swagger-jsdoc")
 const swaggerDocument = require('./swagger/categories.swaggeres.json');
 
-const swaggerDocument = require('./swagger/Comentarios-1.0.0-resolved.json');
+
+
+const swaggerDocumentComent = require('./swagger/Comentarios-1.0.0-resolved.json');
 
 require('dotenv').config();
 

@@ -12,8 +12,8 @@ const {
 } = require('../controllers/news.controller');
 
 router.get('/', getAllNews)
-router.post('/', createNews)
-router.put('/:id', updateNews)
+router.post('/',checkRol, createNews)
+router.put('/:id',checkRol, updateNews)
 router.delete('/:id', checkRol, deleteNews)
 
 module.exports = router;
