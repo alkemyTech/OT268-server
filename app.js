@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
-
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerDocumentCategory = require('./swagger/categories.swaggeres.json');
 const swaggerDocumentComentario = require('./swagger/Comentarios-1.0.0-resolved.json');

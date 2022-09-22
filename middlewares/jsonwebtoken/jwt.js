@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
-
-const jwtKey = "shhhhh" // arbitrario y sólo para el primer sprint. NO LO ALMACENEN EN LA FUNCIÓN SINO EN UN ARCHIVO .ENV
-const expirationTime = 4000*60 // arbitrario también
+require("dotenv").config();
+const jwtKey = process.env.JWT_SECRET 
+const expirationTime = 4000*60 // arbitrario
 
 function newToken(req, res) {
     
@@ -12,7 +12,7 @@ function newToken(req, res) {
     }
    
     const token = jwt.sign({ email }, jwtKey, {
-        algorithm: "HS256",
+        alg: "HS256",
         expiresIn: expirationTime
         })
     res.send({"token": token})
@@ -33,7 +33,8 @@ function authJWT(req, res){
         if (e instanceof jwt.JsonWebTokenError) return res.status(401).send('invalid token').end()
         return res.status(400).send('something went wrong').end()
     }
-    res.status(200).send(`${payload.email} authorized`)
+    res.status(200).send(message: `${payload.email} authorized`)
+
 }
 
 module.exports = {
