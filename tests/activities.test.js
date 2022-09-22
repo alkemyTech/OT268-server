@@ -80,43 +80,43 @@ describe("POST /activities", function () {
 
 })
 
-// describe("GET /activities", function () {
+describe("GET /activities", function () {
 
-//   it("returns all activity should succeed with admin credentials", async function () {
-//     const response = await request
-//     .get('/activities')
-//     expect(response.status).to.eql(200);
-//   });
+  it("returns all activity should succeed with admin credentials", async function () {
+    const response = await request
+    .get('/activities')
+    expect(response.status).to.eql(200);
+  });
 
-// })
+})
 
-// describe("UPDATE /activities/:id", function () {
-//   let activityId = null;
-//   it('return update a activity should succeed with admin credentials', async function () {
-//     const response = await request
-//     .put(`/activities/${activityId}`)
-//     .set("Authorization", `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1LCJlbWFpbCI6ImFkbWluQHRlc3QxLmNvbSIsInVzZXJfcm9sZUlkIjoxLCJpYXQiOjE2NjM3Nzk5NTMsImV4cCI6MTY2NDAxOTk1M30.z_I313u_4kYPabG7n5yjCYp7Il7qjvLChTlBSUJ4Ho0`)
-//     .send({
-//       'name': 'namemocha',
-//       'content': 'content',
-//       'image': 'image',
-//     });
+describe("UPDATE /activities/:id", function () {
+  let activityId = null;
+  it('return update a activity should succeed with admin credentials', async function () {
+    const response = await request
+    .put(`/activities/${activityId}`)
+    .set("Authorization", `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1LCJlbWFpbCI6ImFkbWluQHRlc3QxLmNvbSIsInVzZXJfcm9sZUlkIjoxLCJpYXQiOjE2NjM3Nzk5NTMsImV4cCI6MTY2NDAxOTk1M30.z_I313u_4kYPabG7n5yjCYp7Il7qjvLChTlBSUJ4Ho0`)
+    .send({
+      'name': 'namemocha',
+      'content': 'content',
+      'image': 'image',
+    });
         
-//     expect(response.status).to.eql(200);
-//   });  
-// })
+    expect(response.status).to.eql(200);
+  });  
+})
 
-// describe("DELETE /activities/:id", function () {
+describe("DELETE /activities/:id", function () {
   
-//   let activityId = null;
+  let activityId = null;
 
-//   it('return delete a activity should succeed with admin credentials', async function () {
-//     const response = await request
-//     .del(`/activities/${activityId}`)
-//     .set("Authorization", `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1LCJlbWFpbCI6ImFkbWluQHRlc3QxLmNvbSIsInVzZXJfcm9sZUlkIjoxLCJpYXQiOjE2NjM3Nzk5NTMsImV4cCI6MTY2NDAxOTk1M30.z_I313u_4kYPabG7n5yjCYp7Il7qjvLChTlBSUJ4Ho0`)
+  it('return delete a activity should succeed with admin credentials', async function () {
+    const response = await request
+    .del(`/activities/${activityId}`)
+    .set("Authorization", `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1LCJlbWFpbCI6ImFkbWluQHRlc3QxLmNvbSIsInVzZXJfcm9sZUlkIjoxLCJpYXQiOjE2NjM3Nzk5NTMsImV4cCI6MTY2NDAxOTk1M30.z_I313u_4kYPabG7n5yjCYp7Il7qjvLChTlBSUJ4Ho0`)
         
-//     expect(response.status).to.eql(200);
-//   });
+    expect(response.status).to.eql(200);
+  });
 
 
-// });
+});
