@@ -2,19 +2,17 @@ const express = require("express");
 const router = express.Router();
 
 const { check, validationResult } = require("express-validator");
-const {
-  postContactInformation,
-  getContactInformation,
-} = require("../controllers/contacts.controller");
+const ContactController = require("../controllers/contacts.controller");
 const { checkRol } = require("../middlewares/checkRol/checkRol");
 
 router.post(
   "/",
   [
+  
     check("email").isEmail().notEmpty(),
     check('name')
       .notEmpty()
-      .isLength({ min: 4 })
+      .isLength({ min: 3 })
   ],
   (req, res, next) => {
     const errors = validationResult(req);
@@ -24,9 +22,9 @@ router.post(
       next();
     }
   },
-  postContactInformation
+  ContactController.postContactInformation
 );
 
-router.get("/", checkRol, getContactInformation);
+router.get("/", checkRol, ContactController.getContactInformation);
 
 module.exports = router;
