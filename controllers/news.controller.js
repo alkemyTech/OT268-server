@@ -5,6 +5,7 @@ const { News } = models
 
 const getAllNews = async (req, res) => {
 
+
     let news = {};
     const { page } = req.query;
     news = await News.findAll();

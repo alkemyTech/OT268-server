@@ -14,7 +14,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3002" ,
+      "url": "http://localhost:3001",
       "description": "Desarrollo"
     },
     {
@@ -22,24 +22,24 @@
       "description": "Producción"
     }
   ],
-  "basePath": "/",
+  
   "tags": [
     {
-      "name": "news",
-      "description": "Operations about news."
+      "name": "categories",
+      "description": "Operations about categories."
     }
   ],
   "paths": {
-    "/news/": {
+    "/category/": {
       "get": {
         "security": [
           {
-           "bearerAuth": [{"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJlbWFpbCI6InRlc3QyQHRlc3QuY29tIiwidXNlcl9yb2xlSWQiOjEsImlhdCI6MTY2Mzc5NjAwMSwiZXhwIjoxNjY0MDM2MDAxfQ.JTp72XWqOZ-UmA7znD7kz9Lomip3qedqbOh6CckKASA"}]
+           " bearerAuth": []
           }
         ],
         
-        "tags": ["news"],
-        "summary": "Return a list of existing news",
+        "tags": ["category"],
+        "summary": "Return a list of existing categories",
         "description": "# Service for retrieve comments by parameters with pagination\n - For the pagination, you need send offset and limit parameters.",
         "responses": {
           "200": {
@@ -49,7 +49,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/News"
+                    "$ref": "#/components/schemas/Category"
                   }
                 }
               }
@@ -116,15 +116,15 @@
         }
       }
     },
-    "/news/{id}": {
+    "/category/{id}": {
       "get": {
         "security": [
           {
            " bearerAuth": []
           }
         ],
-        "tags": ["news"],
-        "summary": "Return a list of news providing an existing id.",
+        "tags": ["category"],
+        "summary": "Return a list of categories providing an existing id.",
         "description": "",
         "parameters": [
           {
@@ -139,13 +139,13 @@
         ],
         "responses": {
           "200": {
-            "description": "A JSON Array of news.",
+            "description": "A JSON Array of categories.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/News"
+                    "$ref": "#/components/schemas/Category"
                   }
                 }
               }
@@ -181,14 +181,14 @@
            " bearerAuth": []
           }
         ],
-        "tags": ["news"],
-        "summary": "Update an existing news by providing the correct id.",
+        "tags": ["category"],
+        "summary": "Update an existing category by providing the correct id.",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "The id of the news that needs to be updated.",
+            "description": "The id of the category that needs to be updated.",
             "required": true,
             "schema": {
               "type": "string"
@@ -206,7 +206,7 @@
         },
         "responses": {
           "201": {
-            "description": "News updated",
+            "description": "Category updated",
             "content": {
               "application/json": {
                 "schema": {
@@ -246,14 +246,14 @@
            " bearerAuth": []
           }
         ],
-        "tags": ["news"],
-        "summary": "Delete an existing news by providing the correct id.",
+        "tags": ["category"],
+        "summary": "Delete an existing category by providing the correct id.",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "The id of the news that needs to be deleted.",
+            "description": "The id of the category that needs to be deleted.",
             "required": true,
             "schema": {
               "type": "string"
@@ -262,7 +262,7 @@
         ],
         "responses": {
           "200": {
-            "description": "News deleted."
+            "description": "Category deleted."
           },
           "400": {
             "description": "Error message in JSON",
@@ -304,7 +304,7 @@
     
       },
     "schemas": {
-      "News": {
+      "Category": {
         "required": ["id"],
         "type": "object",
         "properties": {
@@ -319,29 +319,24 @@
             "example": "true"
           },
           "id": {
-            "description": "News id.",
+            "description": "Category id.",
             "type": "integer",
             "example": "1"
           },
           "name": {
-            "description": "The news name.",
+            "description": "The category name.",
             "type": "string",
             "example": "Random"
           },
-          "content": {
-            "description": "News description.",
+          "description": {
+            "description": "Category description.",
             "type": "string",
             "example": "Random"
           },
           "image": {
-            "description": "News image.",
+            "description": "Category image.",
             "type": "string",
             "example": "jpg"
-          },
-          "categoryId": {
-            "description": "News id.",
-            "type": "integer",
-            "example": "1"
           },
           "createdAt": {
             "description": "date of the user creation.",
@@ -360,24 +355,19 @@
         "type": "object",
         "properties": {
           "name": {
-            "description": "The news name.",
+            "description": "The category name.",
             "type": "string",
             "example": "Random example"
           },
-          "content": {
-            "description": "News description.",
+          "description": {
+            "description": "Category description.",
             "type": "string",
             "example": "Random example"
           },
           "image": {
-            "description": "News image.",
+            "description": "Category image.",
             "type": "string",
             "example": "jpg example"
-          },
-          "categoryId": {
-            "description": "News news.",
-            "type": "object",
-            "example": "Random example"
           }
         }
       },
@@ -414,3 +404,6 @@
     }
   }
 }
+
+
+
