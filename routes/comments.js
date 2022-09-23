@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { checkRol } = require('../middlewares/checkRol/checkRol');
+
 const CommentsController = require('../controllers/comments.controller');
 const { check, validationResult } = require("express-validator");
 
@@ -26,5 +27,5 @@ router.post(
     CommentsController.uploadComment
   );
 router.put('/:id', checkRol, CommentsController.updateComments);
-  
+router.delete('/:id', CommentsController.deleteComment)
 module.exports = router;
