@@ -20,7 +20,7 @@ const organizationsRouter = require('./routes/organizations');
 const authRouter = require('./routes/auth');
 const categoryRouter = require('./routes/category');
 const newRouter = require('./routes/news');
-const contacts = require('./routes/contacts');
+
 const comment = require('./routes/comments');
 
 const swaggerDocument = require('./swagger/novedades_swagger.json');
@@ -43,16 +43,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
 app.use('/category', categoryRouter);
-
 app.use('/organizations', organizationsRouter);
 app.use('/auth', authRouter);
 app.use('/news', newRouter);
-
 app.use('/activities', activitiesRouter);
 app.use('/comment', comment);
-app.use('/contacts', contacts);
 app.use('/slides', slidesRouter);
 
 // Swagger config

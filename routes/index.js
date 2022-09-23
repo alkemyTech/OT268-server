@@ -3,7 +3,7 @@ const router = express.Router();
 const organizationRoutes = require('./organizations');
 const authRoutes = require('./auth');
 const slidesRoutes = require('./slides');
-
+const contacts = require('./contacts');
 const newsRoutes = require('./news')
 const membersRoutes = require('./members')
 const testimonialsRoutes = require('./testimonials');
@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-
+router.use('/contacts', contacts);
 router.use('/organization', organizationRoutes);
 router.use('/news', newsRoutes);
 router.use('/auth', authRoutes)
