@@ -1,12 +1,12 @@
 const expect = require("chai").expect;
+const chai = require("chai");
 
 const app = require("../app")
 const request = require("supertest")(app);
 
 
-
-let adminToken, regularToken = null;
-const baseRequest = { name: "News 1", content: "News content", image: "https://via.placeholder.com/600/92c952",categoryId: 1 }
+let adminToken
+const baseRequest = { name: "Activity 1", content: "activity content", image: "https://picsum.photos/200", categoryId: 3 }
 
 before(async () => {
     const responseAdmin = await request
@@ -16,76 +16,56 @@ before(async () => {
             'password': '1234',
         });
     adminToken = responseAdmin.body.token;
-
-    const responseRegular = await request
-        .post("/auth/login")
-        .send({
-            'email': 'regular@test1.com',
-            'password': '1234',
-        });
-    regularToken = responseRegular.body.token;
-});
-
-describe("GET /news", function () {
-
-    it("returns all news should fail without credentials", async function () {
-        const response = await request
-            .get("/news");
-
-        expect(response.status).to.eql(500);
-    });
-
+    console.log(adminToken)
 });
 
 describe("POST /news", function () {
 
-    it('return insert a news should succeed with admin credentials', async () => {
-        const response = await request
-            .post('/news')
-            .set("Authorization", `Bearer ${adminToken}`)
+
+    it('news POST with ', async () => {
+        let response = await request
+            .post("/news")
+            .set('Token', adminToken)
+            .set('content-type', 'application/x-www-form-urlencoded')
+            .type('form')
             .send(baseRequest)
-            
-        console.log(response)
+        respuesta = response.body
+        console.log(respuesta)
+        expect(response.status).to.eql(200);
+        expect(response.body);
     });
+    // it('news POST without token', async () => {
+    //     const response = await request
+    //         .post("/news")
+    //         .send(baseRequest)
+    //     expect(response.status).to.eql(500);
+    // });
 
-});
+})
 
-describe("UPDATE /news/:id", function () {
+// describe("GET /news", () => {
 
-    it('return update a news should fail without credentials', async function () {
-        const response = await request
-            .put(`/news/${newsId}`)
-            .send({
-                content: "content news"
-            });
-        expect(response.status).to.eql(500);
-    });
+//     it('news GET', async () => {
+//         let response = await request
+//             .get('news/all')
+//             .set('Accept', 'application/json')
+//         expect(response.status).to.eql(200);
+//     });
+// })
 
-    it('return update a news should fail with admin credentials and id not found', async function () {
-        const response = await request
-            .put('/news/0')
-            .set("Authorization", `Bearer ${adminToken}`)
-            .send(baseRequest);
-        expect(response.status).to.eql(500);
-    });
+// describe("UPDATE /news", () => {
 
-});
+//   it('news UPDATE', async () => {
+//     let response = await request
+//     .update('news')
+//     expect(200);
+//   });
+// })
+// describe("DELETE /news", () => {
 
-describe("DELETE /news/:id", function () {
-
-    it('return delete a news should fail without credentials', async function () {
-        const response = await request
-            .del(`/news/${newsId}`)
-
-        expect(response.status).to.eql(500);
-    });
-
-    it('return delete a news should fail with admin credentials and id not found', async function () {
-        const response = await request
-            .put('/news/0')
-            .set("Authorization", `Bearer ${adminToken}`)
-            .send(baseRequest);
-        expect(response.status).to.eql(500);
-    });
-
-});
+//   it('news DELETE', async () => {
+//     let response = await request
+//     .delete('news')
+//     expect(200);
+//   });
+// })
