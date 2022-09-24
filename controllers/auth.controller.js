@@ -8,13 +8,13 @@ const logIn = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    if (!email && !password) {
-      res.status(400).send("all input are required");
+    if (!email || !password) {
+      return res.status(400).send("all input are required");
     }
 
     const user = await User.findOne({ where: { email: email.toLowerCase() } });
     if (!user) {
-           return res.status(404).json({ ok: false });
+          return res.status(404).json({ ok: false });
         }
 
      if (user && (await bcrypt.compare(password, user.password))) {
@@ -29,6 +29,7 @@ const logIn = async (req, res, next) => {
 
       return res.status(200).json({ token });
     }
+    return res.status(404).json({ ok: false });
     
   } catch (error) {
     return res.status(404).json({ ok: false });

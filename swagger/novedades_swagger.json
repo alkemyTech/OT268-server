@@ -14,7 +14,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3001",
+      "url": "http://localhost:3002" ,
       "description": "Desarrollo"
     },
     {
@@ -22,15 +22,15 @@
       "description": "Producción"
     }
   ],
-  
+  "basePath": "/",
   "tags": [
     {
-      "name": "categories",
-      "description": "Operations about categories."
+      "name": "news",
+      "description": "Operations about news."
     }
   ],
   "paths": {
-    "/category/": {
+    "/news/": {
       "get": {
         "security": [
           {
@@ -38,8 +38,8 @@
           }
         ],
         
-        "tags": ["category"],
-        "summary": "Return a list of existing categories",
+        "tags": ["news"],
+        "summary": "Return a list of existing news",
         "description": "# Service for retrieve comments by parameters with pagination\n - For the pagination, you need send offset and limit parameters.",
         "responses": {
           "200": {
@@ -49,7 +49,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Category"
+                    "$ref": "#/components/schemas/News"
                   }
                 }
               }
@@ -116,15 +116,15 @@
         }
       }
     },
-    "/category/{id}": {
+    "/news/{id}": {
       "get": {
         "security": [
           {
            " bearerAuth": []
           }
         ],
-        "tags": ["category"],
-        "summary": "Return a list of categories providing an existing id.",
+        "tags": ["news"],
+        "summary": "Return a list of news providing an existing id.",
         "description": "",
         "parameters": [
           {
@@ -139,13 +139,13 @@
         ],
         "responses": {
           "200": {
-            "description": "A JSON Array of categories.",
+            "description": "A JSON Array of news.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Category"
+                    "$ref": "#/components/schemas/News"
                   }
                 }
               }
@@ -181,14 +181,14 @@
            " bearerAuth": []
           }
         ],
-        "tags": ["category"],
-        "summary": "Update an existing category by providing the correct id.",
+        "tags": ["news"],
+        "summary": "Update an existing news by providing the correct id.",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "The id of the category that needs to be updated.",
+            "description": "The id of the news that needs to be updated.",
             "required": true,
             "schema": {
               "type": "string"
@@ -206,7 +206,7 @@
         },
         "responses": {
           "201": {
-            "description": "Category updated",
+            "description": "News updated",
             "content": {
               "application/json": {
                 "schema": {
@@ -246,14 +246,14 @@
            " bearerAuth": []
           }
         ],
-        "tags": ["category"],
-        "summary": "Delete an existing category by providing the correct id.",
+        "tags": ["news"],
+        "summary": "Delete an existing news by providing the correct id.",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "The id of the category that needs to be deleted.",
+            "description": "The id of the news that needs to be deleted.",
             "required": true,
             "schema": {
               "type": "string"
@@ -262,7 +262,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Category deleted."
+            "description": "News deleted."
           },
           "400": {
             "description": "Error message in JSON",
@@ -304,7 +304,7 @@
     
       },
     "schemas": {
-      "Category": {
+      "News": {
         "required": ["id"],
         "type": "object",
         "properties": {
@@ -319,24 +319,29 @@
             "example": "true"
           },
           "id": {
-            "description": "Category id.",
+            "description": "News id.",
             "type": "integer",
             "example": "1"
           },
           "name": {
-            "description": "The category name.",
+            "description": "The news name.",
             "type": "string",
             "example": "Random"
           },
-          "description": {
-            "description": "Category description.",
+          "content": {
+            "description": "News description.",
             "type": "string",
             "example": "Random"
           },
           "image": {
-            "description": "Category image.",
+            "description": "News image.",
             "type": "string",
             "example": "jpg"
+          },
+          "categoryId": {
+            "description": "News id.",
+            "type": "integer",
+            "example": "1"
           },
           "createdAt": {
             "description": "date of the user creation.",
@@ -355,19 +360,24 @@
         "type": "object",
         "properties": {
           "name": {
-            "description": "The category name.",
+            "description": "The news name.",
             "type": "string",
             "example": "Random example"
           },
-          "description": {
-            "description": "Category description.",
+          "content": {
+            "description": "News description.",
             "type": "string",
             "example": "Random example"
           },
           "image": {
-            "description": "Category image.",
+            "description": "News image.",
             "type": "string",
             "example": "jpg example"
+          },
+          "categoryId": {
+            "description": "News news.",
+            "type": "object",
+            "example": "Random example"
           }
         }
       },
@@ -404,6 +414,3 @@
     }
   }
 }
-
-
-

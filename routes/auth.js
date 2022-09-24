@@ -15,7 +15,6 @@ router.post(
       .withMessage({ ok: false }),
   ],
   logIn, 
-  newToken
 );
 router.get('/me', authJWT)
 module.exports = router;
