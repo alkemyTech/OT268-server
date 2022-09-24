@@ -7,6 +7,7 @@ const request = require("supertest")(app);
 
 let adminToken
 const baseRequest = { name: "Activity 1", content: "activity content", image: "https://picsum.photos/200", categoryId: 3 }
+let newId;
 
 before(async () => {
     const responseAdmin = await request
@@ -16,11 +17,10 @@ before(async () => {
             'password': '1234',
         });
     adminToken = responseAdmin.body.token;
-    console.log(adminToken)
+    //console.log(adminToken)
 });
 
 describe("POST /news", function () {
-
 
     it('news POST with ', async () => {
         let response = await request
@@ -30,42 +30,46 @@ describe("POST /news", function () {
             .type('form')
             .send(baseRequest)
         respuesta = response.body
-        console.log(respuesta)
+        newId = response.body.id;
+
+        //console.log(respuesta)
         expect(response.status).to.eql(200);
         expect(response.body);
     });
-    // it('news POST without token', async () => {
-    //     const response = await request
-    //         .post("/news")
-    //         .send(baseRequest)
-    //     expect(response.status).to.eql(500);
-    // });
+})
+
+describe("GET /news", () => {
+
+    it('news GET', async () => {
+        const response = await request
+            .get('/news')
+            .set('Accept', 'application/json')
+        respuesta = response.body
+        //console.log(respuesta)
+        expect(response.status).to.eql(200)
+    });
+})
+
+describe("UPDATE /news", () => {
+    it('news UPDATE', async () => {
+
+        let response = await request
+        .put(`/news/${newId}`)
+        .set('Token', adminToken)
+        .set('content-type', 'application/x-www-form-urlencoded')
+        .type('form')
+        expect(response.status).to.eql(200)
+    });
 
 })
 
-// describe("GET /news", () => {
-
-//     it('news GET', async () => {
-//         let response = await request
-//             .get('news/all')
-//             .set('Accept', 'application/json')
-//         expect(response.status).to.eql(200);
-//     });
-// })
-
-// describe("UPDATE /news", () => {
-
-//   it('news UPDATE', async () => {
-//     let response = await request
-//     .update('news')
-//     expect(200);
-//   });
-// })
-// describe("DELETE /news", () => {
-
-//   it('news DELETE', async () => {
-//     let response = await request
-//     .delete('news')
-//     expect(200);
-//   });
-// })
+describe("DELETE /news", () => {
+    it('news DELETE', async () => {
+        let response = await request
+        .delete(`/news/${newId}`)
+        .set('Token', adminToken)
+        .set('content-type', 'application/x-www-form-urlencoded')
+        .type('form')
+        expect(response.status).to.eql(201);
+    });
+})
