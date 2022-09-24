@@ -100,13 +100,10 @@ const updateNews = async (req, res) => {
 const deleteNews = async (req, res) => {
     try {
         const { id } = req.params;
-        const oldId = await News.findByPk(id);
-
-        if (!oldId) return res.status(404).send(`the New with ID = ${id} not exist`);
 
         const news = await News.destroy({ where: { id: +id } });
         res.status(201).json({
-            message: `the New with ID = ${news} was deleted`,
+            message: `the New with ID=${id} was deleted`,
         });
 
     } catch (error) {
@@ -115,10 +112,6 @@ const deleteNews = async (req, res) => {
         });
     };
 }
-
-
-
-
 
 module.exports = {
     getAllNews,
